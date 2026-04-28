@@ -1,7 +1,9 @@
-import { app, BrowserWindow } from 'electron';
-import path from 'node:path';
-import { fileURLToPath } from 'node:url';
+import {
+  app, BrowserWindow, Menu, type MenuItemConstructorOptions,
+} from 'electron';
 import squirrelStartup from 'electron-squirrel-startup';
+import path from 'node:path';
+import {fileURLToPath} from 'node:url';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -11,14 +13,10 @@ if (squirrelStartup) {
   app.quit();
 }
 
-const createWindow = (): void => {
+function createWindow(): void {
   // Create the browser window.
   const mainWindow = new BrowserWindow({
-    width: 800,
-    height: 600,
-    webPreferences: {
-      preload: path.join(__dirname, 'preload.js'),
-    },
+    width: 800, height: 600, icon: path.join(__dirname, 'favicon.png'),
   });
 
   // and load the index.html of the app.
@@ -26,13 +24,43 @@ const createWindow = (): void => {
 
   // Open the DevTools.
   mainWindow.webContents.openDevTools();
-};
+}
+
+function createMenu(): void {
+  const template: MenuItemConstructorOptions[] = [
+    {
+      label: 'File', submenu: [
+        {
+          label: 'Exit', accelerator: 'CmdOrCtrl+Q', click: () => {
+            app.quit();
+          },
+        }],
+    }, {
+      label: 'Edit', submenu: [
+        {role: 'undo'},
+        {role: 'redo'},
+        {type: 'separator'},
+        {role: 'cut'},
+        {role: 'copy'},
+        {role: 'paste'}],
+    }, {
+      label: 'View', submenu: [
+        {role: 'reload'}, {role: 'forceReload'}, {role: 'toggleDevTools'}],
+    }, {
+      label: 'Window', submenu: [
+        {role: 'minimize'}, {role: 'zoom'}],
+    }];
+
+  const menu = Menu.buildFromTemplate(template);
+  Menu.setApplicationMenu(menu);
+}
 
 // This method will be called when Electron has finished
 // initialization and is ready to create browser windows.
 // Some APIs can only be used after this event occurs.
 app.whenReady().then(() => {
   createWindow();
+  createMenu();
 
   // On OS X it's common to re-create a window in the app when the
   // dock icon is clicked and there are no other windows open.

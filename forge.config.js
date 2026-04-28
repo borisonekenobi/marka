@@ -5,11 +5,9 @@ module.exports = {
   packagerConfig: {
     asar: true,
     files: [
-      'dist',
-      'src/index.html',
-      'src/index.css',
+      'dist/marka',
       'package.json',
-    ],
+    ]
   },
   rebuildConfig: {},
   makers: [

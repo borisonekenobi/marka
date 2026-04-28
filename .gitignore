@@ -91,6 +91,9 @@ dist/
 # Vite
 .vite/
 
+# Angular
+.angular/
+
 # Electron-Forge
 out/
 
