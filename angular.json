@@ -21,6 +21,9 @@
               "base": "dist/marka",
               "browser": ""
             },
+            "sourceMap": false,
+            "prerender": false,
+            "ssr": false,
             "browser": "src/main.ts",
             "tsConfig": "tsconfig.app.json",
             "assets": [
@@ -33,6 +36,9 @@
           },
           "configurations": {
             "production": {
+              "sourceMap": false,
+              "prerender": false,
+              "ssr": false,
               "budgets": [
                 {
                   "type": "initial",
@@ -48,6 +54,8 @@
               "outputHashing": "none"
             },
             "development": {
+              "prerender": false,
+              "ssr": false,
               "optimization": false,
               "extractLicenses": false,
               "sourceMap": true
