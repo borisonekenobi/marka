@@ -1,0 +1,9 @@
+hr {
+  flex: 0 0 auto;
+  width: 1px;
+  height: 24px;
+  margin: 0 12px;
+  background: dimgray;
+  border: none;
+  border-radius: 1px;
+}

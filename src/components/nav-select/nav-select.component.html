@@ -1,0 +1,51 @@
+<div class="dropdown-container">
+  <button (click)="selectOption(selectedOption()!)" [attr.aria-label]="title" class="dropdown-trigger">
+    <span class="selected-text">{{ selectedOption().label || 'Select...' }}</span>
+  </button>
+
+  <button (click)="toggleDropdown()" [attr.aria-label]="title + ' toggle'" class="dropdown-toggle">
+    <svg
+      [class.open]="isOpen()"
+      class="dropdown-arrow"
+      fill="currentColor"
+      viewBox="0 -960 960 960"
+      xmlns="http://www.w3.org/2000/svg"
+    >
+      <path d="M480-360 280-560h400L480-360Z" />
+    </svg>
+  </button>
+
+  <div [class.open]="isOpen()" class="dropdown-menu">
+    @for (option of component.options; track option.value) {
+      <button
+        (click)="selectOption(option)"
+        [class.selected]="selectedOption().value === option.value"
+        class="dropdown-option"
+      >
+        @switch (option.elementType) {
+          @case ('p') {
+            <p>{{ option.label }}</p>
+          }
+          @case ('h1') {
+            <h1>{{ option.label }}</h1>
+          }
+          @case ('h2') {
+            <h2>{{ option.label }}</h2>
+          }
+          @case ('h3') {
+            <h3>{{ option.label }}</h3>
+          }
+          @case ('h4') {
+            <h4>{{ option.label }}</h4>
+          }
+          @case ('h5') {
+            <h5>{{ option.label }}</h5>
+          }
+          @case ('h6') {
+            <h6>{{ option.label }}</h6>
+          }
+        }
+      </button>
+    }
+  </div>
+</div>

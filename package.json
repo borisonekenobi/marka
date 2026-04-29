@@ -20,9 +20,12 @@
   "scripts": {
     "ng": "ng",
     "start": "npm run build && electron-forge start",
-    "dev": "nodemon --watch src --ext ts,html,css --exec \"npm run start\"",
+    "start-dev": "npm run build-dev && electron-forge start",
+    "dev": "nodemon --watch src --ext ts,html,css --exec \"npm run start-dev\"",
     "build": "npm run build-ng && npm run build-electron",
+    "build-dev": "npm run build-ng-dev && npm run build-electron",
     "build-ng": "ng build",
+    "build-ng-dev": "ng build --configuration development",
     "build-electron": "tsc -p tsconfig.electron.json",
     "package": "npm run build && electron-forge package",
     "make": "npm run build && electron-forge make",
