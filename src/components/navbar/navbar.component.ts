@@ -61,11 +61,6 @@ export class NavbarComponent {
       onclick: App.italic,
       path: 'M216-192v-96h160l124-384H336v-96h408v96H596L472-288h152v96H216Z',
     }),
-    new ButtonNavElement({
-      name: 'Underline (Ctrl+U)',
-      onclick: App.underline,
-      path: 'M240-144v-72h480v72H240Zm91.5-203.4Q279-406.8 279-504.86V-816h97.21v317.09q0 52.85 26.43 85.88Q429.07-380 480.03-380q50.97 0 77.39-33.03 26.41-33.03 26.41-85.88V-816H681v311.14q0 98.06-52.5 157.46Q576-288 480-288t-148.5-59.4Z',
-    }),
     new SeparatorNavElement(),
     new ButtonNavElement({
       name: 'Insert link (Ctrl+K)',

@@ -8,5 +8,6 @@ import { ButtonNavElement } from '../../models/nav-element';
   styleUrl: './nav-button.component.css',
 })
 export class NavButtonComponent {
-  @Input({ required: true }) public component!: ButtonNavElement;
+  @Input({ required: true })
+  public component!: ButtonNavElement;
 }

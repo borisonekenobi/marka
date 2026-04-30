@@ -17,8 +17,11 @@ import { NavElementOption, SelectNavElement } from '../../models/nav-element';
   styleUrl: './nav-select.component.css',
 })
 export class NavSelectComponent implements OnInit {
-  @Input({ required: true }) public component!: SelectNavElement;
-  @Input() public title: string = '';
+  @Input({ required: true })
+  public component!: SelectNavElement;
+
+  @Input()
+  public title: string = '';
 
   protected isOpen!: WritableSignal<boolean>;
   protected selectedOption!: WritableSignal<NavElementOption>;

@@ -1,0 +1,21 @@
+@if (block instanceof Blockquote) {
+  <marka-blockquote [blockquote]="block" />
+} @else if (block instanceof CodeBlock) {
+  <marka-code-block [codeBlock]="block" />
+} @else if (block instanceof DefinitionList) {
+  <marka-definition-list [definitionList]="block" />
+} @else if (block instanceof FootnoteDefinition) {
+  <marka-footnote-definition [footnoteDefinition]="block" />
+} @else if (block instanceof Heading) {
+  <marka-heading [heading]="block" />
+} @else if (block instanceof HorizontalRule) {
+  <marka-horizontal-rule [horizontalRule]="block" />
+} @else if (block instanceof List) {
+  <marka-list [list]="block" />
+} @else if (block instanceof Paragraph) {
+  <marka-paragraph [paragraph]="block" />
+} @else if (block instanceof Table) {
+  <marka-table [table]="block" />
+} @else {
+  <span style="color: red">Unsupported block type: {{ block.constructor.name }}</span>
+}

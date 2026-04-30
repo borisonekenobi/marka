@@ -1,5 +1,5 @@
 <div contenteditable="true">
-  @for (element of components; track element) {
-    <p>test!</p>
+  @for (block of doc; track block) {
+    <marka-block [block]="block" />
   }
 </div>

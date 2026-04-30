@@ -30,10 +30,6 @@ export class App {
     console.log('italic');
   }
 
-  public static underline(): void {
-    console.log('underline');
-  }
-
   public static insertLink(): void {
     console.log('insert link');
   }
