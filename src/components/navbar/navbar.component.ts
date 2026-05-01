@@ -12,6 +12,7 @@ import { App } from '../../app/app';
 
 @Component({
   selector: 'navbar',
+  standalone: true,
   imports: [NavButtonComponent, NavSelectComponent, NavSeparatorComponent],
   templateUrl: './navbar.component.html',
   styleUrl: './navbar.component.css',

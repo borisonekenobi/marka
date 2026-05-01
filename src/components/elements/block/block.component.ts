@@ -1,25 +1,28 @@
 import { Component, Input } from '@angular/core';
 import { BlockElement } from '../../../models/file-elements';
-import { Blockquote, BlockquoteComponent } from '../blockquote/blockquote.component';
-import { CodeBlock, CodeBlockComponent } from '../codeblock/code-block.component';
 import {
+  Blockquote,
+  CodeBlock,
   DefinitionList,
-  DefinitionListComponent,
-} from '../definition-list/definition-list.component';
-import {
   FootnoteDefinition,
-  FootnoteDefinitionComponent,
-} from '../footnote-definition/footnote-definition.component';
-import { Heading, HeadingComponent } from '../heading/heading.component';
-import {
+  Heading,
   HorizontalRule,
-  HorizontalRuleComponent,
-} from '../horizontal-rule/horizontal-rule.component';
-import { List, ListComponent } from '../list/list.component';
-import { Paragraph, ParagraphComponent } from '../paragraph/paragraph.component';
-import { Table, TableComponent } from '../table/table.component';
+  List,
+  Paragraph,
+  Table,
+} from '../../../models/block-elements';
+import { BlockquoteComponent } from '../blockquote/blockquote.component';
+import { CodeBlockComponent } from '../codeblock/code-block.component';
+import { DefinitionListComponent } from '../definition-list/definition-list.component';
+import { FootnoteDefinitionComponent } from '../footnote-definition/footnote-definition.component';
+import { HeadingComponent } from '../heading/heading.component';
+import { HorizontalRuleComponent } from '../horizontal-rule/horizontal-rule.component';
+import { ListComponent } from '../list/list.component';
+import { ParagraphComponent } from '../paragraph/paragraph.component';
+import { TableComponent } from '../table/table.component';
 
 @Component({
+  standalone: true,
   selector: 'marka-block',
   imports: [
     BlockquoteComponent,

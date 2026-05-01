@@ -3,6 +3,7 @@ import { ButtonNavElement } from '../../models/nav-element';
 
 @Component({
   selector: 'nav-button',
+  standalone: true,
   imports: [],
   templateUrl: './nav-button.component.html',
   styleUrl: './nav-button.component.css',

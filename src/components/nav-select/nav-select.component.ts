@@ -12,6 +12,7 @@ import { NavElementOption, SelectNavElement } from '../../models/nav-element';
 
 @Component({
   selector: 'nav-select',
+  standalone: true,
   imports: [CommonModule],
   templateUrl: './nav-select.component.html',
   styleUrl: './nav-select.component.css',

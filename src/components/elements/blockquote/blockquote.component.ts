@@ -1,8 +1,9 @@
 import { Component, forwardRef, Input } from '@angular/core';
-import { BlockElement, BlockWithManyBlocks, FileElementType } from '../../../models/file-elements';
 import { BlockComponent } from '../block/block.component';
+import { Blockquote } from '../../../models/block-elements';
 
 @Component({
+  standalone: true,
   selector: 'marka-blockquote',
   imports: [forwardRef((): typeof BlockComponent => BlockComponent)],
   templateUrl: './blockquote.component.html',
@@ -11,13 +12,4 @@ import { BlockComponent } from '../block/block.component';
 export class BlockquoteComponent {
   @Input({ required: true })
   public blockquote!: Blockquote;
-}
-
-export class Blockquote implements BlockWithManyBlocks {
-  public readonly type: FileElementType = FileElementType.Blockquote;
-  public blocks: BlockElement[];
-
-  public constructor(blocks: BlockElement[]) {
-    this.blocks = blocks;
-  }
 }

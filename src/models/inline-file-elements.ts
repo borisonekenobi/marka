@@ -1,8 +1,8 @@
 import {
   FileElementType,
-  InlineElement,
-  InlineWithManyInline,
-  InlineWithNoInline,
+  type InlineElement,
+  type InlineWithManyInline,
+  type InlineWithNoInline,
 } from './file-elements';
 
 export class Bold implements InlineWithManyInline {

@@ -1,8 +1,9 @@
 import { Component, Input } from '@angular/core';
-import { BlockWithNoInline, FileElementType } from '../../../models/file-elements';
+import { HorizontalRule } from '../../../models/block-elements';
 
 @Component({
   selector: 'marka-horizontal-rule',
+  standalone: true,
   imports: [],
   templateUrl: './horizontal-rule.component.html',
   styleUrl: './horizontal-rule.component.css',
@@ -10,8 +11,4 @@ import { BlockWithNoInline, FileElementType } from '../../../models/file-element
 export class HorizontalRuleComponent {
   @Input({ required: true })
   public horizontalRule!: HorizontalRule;
-}
-
-export class HorizontalRule implements BlockWithNoInline {
-  public readonly type: FileElementType = FileElementType.HorizontalRule;
 }

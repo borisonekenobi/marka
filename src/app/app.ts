@@ -5,6 +5,7 @@ import { EditorComponent } from '../components/editor/editor.component';
 
 @Component({
   selector: 'app-root',
+  standalone: true,
   imports: [NavbarComponent, EditorComponent],
   templateUrl: './app.html',
   styleUrl: './app.css',

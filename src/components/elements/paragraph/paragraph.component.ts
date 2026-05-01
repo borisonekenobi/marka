@@ -1,9 +1,10 @@
 import { Component, Input } from '@angular/core';
-import { BlockWithManyInline, FileElementType, InlineElement } from '../../../models/file-elements';
 import { InlineComponent } from '../inline/inline.component';
+import { Paragraph } from '../../../models/block-elements';
 
 @Component({
   selector: 'marka-paragraph',
+  standalone: true,
   imports: [InlineComponent],
   templateUrl: './paragraph.component.html',
   styleUrl: './paragraph.component.css',
@@ -11,13 +12,4 @@ import { InlineComponent } from '../inline/inline.component';
 export class ParagraphComponent {
   @Input({ required: true })
   public paragraph!: Paragraph;
-}
-
-export class Paragraph implements BlockWithManyInline {
-  public readonly type: FileElementType = FileElementType.Paragraph;
-  public inlines: InlineElement[];
-
-  public constructor(inlines: InlineElement[]) {
-    this.inlines = inlines;
-  }
 }

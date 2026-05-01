@@ -1,0 +1,17 @@
+{
+  "compilerOptions": {
+    "outDir": "./dist/marka",
+    "module": "commonjs",
+    "moduleResolution": "node",
+    "target": "es2020",
+    "lib": ["dom", "esnext"],
+    "types": ["node", "electron"],
+    "esModuleInterop": true,
+    "allowSyntheticDefaultImports": true,
+    "sourceMap": false,
+    "declaration": false,
+    "declarationMap": false,
+    "strict": true
+  },
+  "include": ["src/electron/preload.ts"]
+}

@@ -1,8 +1,9 @@
 import { Component, Input } from '@angular/core';
-import { BlockWithNoInline, FileElementType } from '../../../models/file-elements';
+import { CodeBlock } from '../../../models/block-elements';
 
 @Component({
   selector: 'marka-code-block',
+  standalone: true,
   imports: [],
   templateUrl: './code-block.component.html',
   styleUrl: './code-block.component.css',
@@ -10,15 +11,4 @@ import { BlockWithNoInline, FileElementType } from '../../../models/file-element
 export class CodeBlockComponent {
   @Input({ required: true })
   public codeBlock!: CodeBlock;
-}
-
-export class CodeBlock implements BlockWithNoInline {
-  public readonly type: FileElementType = FileElementType.CodeBlock;
-  public code: string;
-  public language?: string;
-
-  public constructor(code: string, language?: string) {
-    this.code = code;
-    this.language = language;
-  }
 }
