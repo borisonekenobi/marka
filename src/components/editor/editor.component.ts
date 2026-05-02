@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { BlockElement } from '../../models/file-elements';
+import { BlockElement } from '@marka-editor/markdown';
 import { BlockComponent } from '../elements/block/block.component';
 
 @Component({

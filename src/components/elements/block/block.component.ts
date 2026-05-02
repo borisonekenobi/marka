@@ -1,6 +1,6 @@
 import { Component, Input } from '@angular/core';
-import { BlockElement } from '../../../models/file-elements';
 import {
+  BlockElement,
   Blockquote,
   CodeBlock,
   DefinitionList,
@@ -10,7 +10,7 @@ import {
   List,
   Paragraph,
   Table,
-} from '../../../models/block-elements';
+} from '@marka-editor/markdown';
 import { BlockquoteComponent } from '../blockquote/blockquote.component';
 import { CodeBlockComponent } from '../codeblock/code-block.component';
 import { DefinitionListComponent } from '../definition-list/definition-list.component';

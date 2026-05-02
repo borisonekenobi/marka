@@ -1,6 +1,6 @@
 import { Component, Input } from '@angular/core';
 import { InlineComponent } from '../inline/inline.component';
-import { Paragraph } from '../../../models/block-elements';
+import { Paragraph } from '@marka-editor/markdown';
 
 @Component({
   selector: 'marka-paragraph',

@@ -1,5 +1,5 @@
 import { Component, Input } from '@angular/core';
-import { FootnoteDefinition } from '../../../models/block-elements';
+import { FootnoteDefinition } from '@marka-editor/markdown';
 
 @Component({
   selector: 'marka-footnote-definition',

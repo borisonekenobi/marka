@@ -1,5 +1,4 @@
 import { Component, Input } from '@angular/core';
-import { InlineElement } from '../../../models/file-elements';
 import {
   Bold,
   Emoji,
@@ -8,13 +7,14 @@ import {
   Highlight,
   Image,
   InlineCode,
+  type InlineElement,
   Italic,
   Link,
   Strikethrough,
   Subscript,
   Superscript,
   Text,
-} from '../../../models/inline-file-elements';
+} from '@marka-editor/markdown';
 import { LinkComponent } from '../link/link.component';
 
 @Component({

@@ -1,5 +1,5 @@
 import { Component, Input } from '@angular/core';
-import { HorizontalRule } from '../../../models/block-elements';
+import { HorizontalRule } from '@marka-editor/markdown';
 
 @Component({
   selector: 'marka-horizontal-rule',

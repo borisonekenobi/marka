@@ -1,7 +1,7 @@
 import { Component, Input } from '@angular/core';
 import { InlineComponent } from '../inline/inline.component';
 import { NgTemplateOutlet } from '@angular/common';
-import { Heading } from '../../../models/block-elements';
+import { Heading } from '@marka-editor/markdown';
 
 @Component({
   selector: 'marka-heading',

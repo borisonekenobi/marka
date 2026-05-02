@@ -2,7 +2,8 @@
   "compilerOptions": {
     "rootDir": "./src/electron",
     "outDir": "./dist/marka",
-    "module": "esnext",
+    "module": "nodenext",
+    "moduleResolution": "nodenext",
     "target": "esnext",
     "lib": ["dom", "esnext"],
     "types": ["node", "electron"],

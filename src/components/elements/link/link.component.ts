@@ -1,5 +1,5 @@
 import { Component, forwardRef, HostListener, Input } from '@angular/core';
-import { Link } from '../../../models/inline-file-elements';
+import { Link } from '@marka-editor/markdown';
 import { InlineComponent } from '../inline/inline.component';
 
 @Component({

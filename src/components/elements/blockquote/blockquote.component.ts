@@ -1,6 +1,6 @@
 import { Component, forwardRef, Input } from '@angular/core';
 import { BlockComponent } from '../block/block.component';
-import { Blockquote } from '../../../models/block-elements';
+import { Blockquote } from '@marka-editor/markdown';
 
 @Component({
   standalone: true,

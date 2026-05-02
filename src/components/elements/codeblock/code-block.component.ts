@@ -1,5 +1,5 @@
 import { Component, Input } from '@angular/core';
-import { CodeBlock } from '../../../models/block-elements';
+import { CodeBlock } from '@marka-editor/markdown';
 
 @Component({
   selector: 'marka-code-block',

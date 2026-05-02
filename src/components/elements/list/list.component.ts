@@ -1,5 +1,5 @@
 import { Component, Input } from '@angular/core';
-import { List } from '../../../models/block-elements';
+import { List } from '@marka-editor/markdown';
 
 @Component({
   selector: 'marka-list',

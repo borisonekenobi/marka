@@ -1,4 +1,6 @@
-import { dialog } from 'electron';
+import { dialog, ipcMain } from 'electron';
+import { Document } from '@marka-editor/markdown';
+import { openFile } from './file-handlers.js';
 
 export function newFile(): void {
   console.log('new file');
@@ -16,21 +18,19 @@ export async function open(
   window;
   _event;
 
-  const result = await dialog.showOpenDialog({
-    properties: ['openFile'],
-    filters: [{ name: 'All Files', extensions: ['*'] }],
+  ipcMain.handle('open-file', async (): Promise<Document | null> => {
+    const result = await dialog.showOpenDialog({
+      properties: ['openFile'],
+    });
+
+    if (result.canceled || result.filePaths.length === 0) {
+      return null;
+    }
+
+    const filePath = result.filePaths[0]!;
+
+    return openFile(filePath);
   });
-
-  if (result.canceled || result.filePaths.length === 0) {
-    return;
-  }
-
-  const filePath = result.filePaths[0];
-  if (!filePath) {
-    return;
-  }
-
-  // TODO: parse opened file and send its content to the renderer process
 }
 
 export function openProjectFolder(): void {

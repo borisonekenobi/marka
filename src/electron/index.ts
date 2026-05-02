@@ -1,3 +1,6 @@
+import path from 'node:path';
+import { fileURLToPath } from 'node:url';
+
 import {
   app,
   BrowserWindow,
@@ -7,8 +10,9 @@ import {
   type MenuItemConstructorOptions,
 } from 'electron';
 import squirrelStartup from 'electron-squirrel-startup';
-import path from 'node:path';
-import { fileURLToPath } from 'node:url';
+
+import { Document } from '@marka-editor/markdown';
+
 import {
   about,
   close,
@@ -21,7 +25,7 @@ import {
   save,
   saveAs,
 } from './commands.js';
-import * as fs from 'node:fs';
+import { openFile, saveFile } from './file-handlers.js';
 
 const __filename: string = fileURLToPath(import.meta.url);
 const __dirname: string = path.dirname(__filename);
@@ -42,18 +46,12 @@ ipcMain.handle('open-file', async () => {
   }
 
   const filePath = result.filePaths[0]!;
-  const content = fs.readFileSync(filePath, 'utf-8');
-
-  // TODO: deserialize Markdown
-  return content;
+  return openFile(filePath);
 });
 
 // Save file
-ipcMain.handle('save-file', async (_event, doc) => {
-  // TODO: serialize to Markdown
-  fs.writeFileSync('file.md', doc);
-
-  return true;
+ipcMain.handle('save-file', async (_event, doc: Document): Promise<void> => {
+  saveFile('file.md', doc);
 });
 
 function createWindow(): void {
