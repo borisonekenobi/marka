@@ -4,13 +4,13 @@ import { NgTemplateOutlet } from '@angular/common';
 import { Heading } from '@marka-editor/markdown';
 
 @Component({
-  selector: 'marka-heading',
-  standalone: true,
-  imports: [InlineComponent, NgTemplateOutlet],
-  templateUrl: './heading.component.html',
-  styleUrl: './heading.component.css',
+	selector: 'marka-heading',
+	standalone: true,
+	imports: [InlineComponent, NgTemplateOutlet],
+	templateUrl: './heading.component.html',
+	styleUrl: './heading.component.css',
 })
 export class HeadingComponent {
-  @Input({ required: true })
-  public heading!: Heading;
+	@Input({ required: true })
+	public heading!: Heading;
 }

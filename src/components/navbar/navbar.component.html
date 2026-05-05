@@ -1,13 +1,13 @@
 <nav>
-  @for (component of components; track component) {
-    @if (component instanceof SelectNavElement) {
-      <nav-select [component]="component" [title]="component.name" />
-    } @else if (component instanceof ButtonNavElement) {
-      <nav-button [component]="component" [title]="component.name" />
-    } @else if (component instanceof SeparatorNavElement) {
-      <nav-separator />
-    } @else {
-      <span style="color: red">Unknown component type: {{ component.constructor.name }}</span>
-    }
-  }
+	@for (component of components; track component) {
+		@if (component instanceof SelectNavElement) {
+			<nav-select [component]="component" [title]="component.name" />
+		} @else if (component instanceof ButtonNavElement) {
+			<nav-button [component]="component" [title]="component.name" />
+		} @else if (component instanceof SeparatorNavElement) {
+			<nav-separator />
+		} @else {
+			<span style="color: red">Unknown component type: {{ component.constructor.name }}</span>
+		}
+	}
 </nav>

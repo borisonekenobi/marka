@@ -1,52 +1,52 @@
 @if (inline instanceof Bold) {
-  <b>
-    @for (childInline of inline.inlines; track childInline) {
-      <marka-inline [inline]="childInline" />
-    }
-  </b>
+	<b>
+		@for (childInline of inline.inlines; track childInline) {
+			<marka-inline [inline]="childInline" />
+		}
+	</b>
 } @else if (inline instanceof Emoji) {
-  <span>{{ inline.name }}</span>
+	<span>{{ inline.name }}</span>
 } @else if (inline instanceof FootnoteReference) {
-  <sup>[{{ inline.id }}]</sup>
+	<sup>[{{ inline.id }}]</sup>
 } @else if (inline instanceof HeadingId) {
 } @else if (inline instanceof Highlight) {
-  <mark>
-    @for (childInline of inline.inlines; track childInline) {
-      <marka-inline [inline]="childInline" />
-    }
-  </mark>
+	<mark>
+		@for (childInline of inline.inlines; track childInline) {
+			<marka-inline [inline]="childInline" />
+		}
+	</mark>
 } @else if (inline instanceof Image) {
-  <img [alt]="inline.alt" [src]="inline.src" [title]="inline.title" />
+	<img [alt]="inline.alt" [src]="inline.src" [title]="inline.title" />
 } @else if (inline instanceof InlineCode) {
-  <code>{{ inline.code }}</code>
+	<code>{{ inline.code }}</code>
 } @else if (inline instanceof Italic) {
-  <i>
-    @for (childInline of inline.inlines; track childInline) {
-      <marka-inline [inline]="childInline" />
-    }
-  </i>
+	<i>
+		@for (childInline of inline.inlines; track childInline) {
+			<marka-inline [inline]="childInline" />
+		}
+	</i>
 } @else if (inline instanceof Link) {
-  <marka-link [link]="inline" />
+	<marka-link [link]="inline" />
 } @else if (inline instanceof Strikethrough) {
-  <s>
-    @for (childInline of inline.inlines; track childInline) {
-      <marka-inline [inline]="childInline" />
-    }
-  </s>
+	<s>
+		@for (childInline of inline.inlines; track childInline) {
+			<marka-inline [inline]="childInline" />
+		}
+	</s>
 } @else if (inline instanceof Subscript) {
-  <sub>
-    @for (childInline of inline.inlines; track childInline) {
-      <marka-inline [inline]="childInline" />
-    }
-  </sub>
+	<sub>
+		@for (childInline of inline.inlines; track childInline) {
+			<marka-inline [inline]="childInline" />
+		}
+	</sub>
 } @else if (inline instanceof Superscript) {
-  <sup>
-    @for (childInline of inline.inlines; track childInline) {
-      <marka-inline [inline]="childInline" />
-    }
-  </sup>
+	<sup>
+		@for (childInline of inline.inlines; track childInline) {
+			<marka-inline [inline]="childInline" />
+		}
+	</sup>
 } @else if (inline instanceof Text) {
-  {{ inline.value }}
+	{{ inline.value }}
 } @else {
-  <span style="color: red">Unsupported inline type: {{ inline.constructor.name }}</span>
+	<span style="color: red">Unsupported inline type: {{ inline.constructor.name }}</span>
 }
