@@ -22,7 +22,7 @@
 	padding: 6px 8px;
 	cursor: pointer;
 	user-select: none;
-	color: #222;
+	color: var(--nav-fg-color);
 	border: none;
 	background: transparent;
 	-webkit-appearance: none;
@@ -36,7 +36,7 @@
 	justify-content: center;
 	padding: 6px 8px;
 	cursor: pointer;
-	color: #222;
+	color: var(--nav-fg-color);
 	border: none;
 	background: transparent;
 	-webkit-appearance: none;
@@ -69,9 +69,9 @@
 	transform 200ms ease;
 	transform: translateY(-8px);
 	opacity: 0;
-	border: 1px solid #ddd;
+	border: 1px solid var(--editor-border-color);
 	border-radius: 4px;
-	background: white;
+	background: var(--editor-bg-color);
 	box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
 }
 

@@ -5,5 +5,5 @@ hr {
 	margin: 0 12px;
 	border: none;
 	border-radius: 1px;
-	background: dimgray;
+	background: var(--nav-separator-color);
 }

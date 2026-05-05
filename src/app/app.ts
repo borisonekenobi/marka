@@ -1,7 +1,8 @@
-import { Component } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { NavbarComponent } from '../components/navbar/navbar.component';
 import { NavElementOption } from '../models/nav-element';
 import { EditorComponent } from '../components/editor/editor.component';
+import { ThemeService } from '../services/theme.service';
 
 @Component({
 	selector: 'app-root',
@@ -10,7 +11,12 @@ import { EditorComponent } from '../components/editor/editor.component';
 	templateUrl: './app.html',
 	styleUrl: './app.css',
 })
-export class App {
+export class App implements OnInit, OnDestroy {
+	private unsubscribeTheme?: () => void;
+	private unsubscribeFont?: () => void;
+
+	constructor(private readonly themeService: ThemeService) {}
+
 	public static undo(): void {
 		console.log('undo');
 	}
@@ -57,5 +63,22 @@ export class App {
 
 	public static increaseIndent(): void {
 		console.log('increase indent');
+	}
+
+	ngOnInit(): void {
+		this.themeService.initTheme();
+		this.themeService.initFont();
+
+		this.unsubscribeTheme = window.marka.onThemeChanged((theme: string) => {
+			this.themeService.setTheme(theme);
+		});
+		this.unsubscribeFont = window.marka.onFontChanged((font: string) => {
+			this.themeService.setFont(font);
+		});
+	}
+
+	ngOnDestroy(): void {
+		this.unsubscribeTheme?.();
+		this.unsubscribeFont?.();
 	}
 }

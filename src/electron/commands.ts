@@ -62,3 +62,23 @@ export function openRecent(
 export function about(): void {
 	console.log('about');
 }
+
+export async function selectTheme(
+	_menuItem: Electron.MenuItem,
+	window: BaseWindow | undefined,
+): Promise<void> {
+	const targetWindow =
+		window instanceof BrowserWindow ? window : BrowserWindow.getFocusedWindow();
+
+	targetWindow?.webContents.send('theme-changed', _menuItem.id);
+}
+
+export async function selectFont(
+	_menuItem: Electron.MenuItem,
+	window: BaseWindow | undefined,
+): Promise<void> {
+	const targetWindow =
+		window instanceof BrowserWindow ? window : BrowserWindow.getFocusedWindow();
+
+	targetWindow?.webContents.send('font-changed', _menuItem.id);
+}

@@ -15,6 +15,8 @@ import {
 	rename,
 	save,
 	saveAs,
+	selectFont,
+	selectTheme,
 } from './commands.js';
 
 const __filename: string = fileURLToPath(import.meta.url);
@@ -84,7 +86,77 @@ function createMenu(): void {
 		},
 		{
 			label: 'View',
-			submenu: [{ role: 'togglefullscreen' }, { role: 'toggleDevTools' }],
+			submenu: [
+				{ role: 'togglefullscreen' },
+				{ role: 'toggleDevTools' },
+				{ type: 'separator' },
+				{
+					label: 'Theme',
+					submenu: [
+						{
+							id: 'theme-default-light',
+							label: 'Light',
+							type: 'radio',
+							click: selectTheme,
+						},
+						{
+							id: 'theme-default-dark',
+							label: 'Dark',
+							type: 'radio',
+							click: selectTheme,
+						},
+						{
+							id: 'theme-github-light',
+							label: 'GitHub Light',
+							type: 'radio',
+							click: selectTheme,
+						},
+						{
+							id: 'theme-github-dark',
+							label: 'GitHub Dark',
+							type: 'radio',
+							click: selectTheme,
+						},
+						{
+							id: 'theme-jetbrains-light',
+							label: 'JetBrains Light',
+							type: 'radio',
+							click: selectTheme,
+						},
+						{
+							id: 'theme-jetbrains-dark',
+							label: 'JetBrains Dark',
+							type: 'radio',
+							click: selectTheme,
+						},
+						{ label: 'Custom...', type: 'radio', click: selectTheme, enabled: false },
+					],
+				},
+				{
+					label: 'Font',
+					submenu: [
+						{
+							id: 'sans-serif',
+							label: 'Arial (sans-serif)',
+							type: 'radio',
+							click: selectFont,
+						},
+						{
+							id: 'serif',
+							label: 'Times New Roman (serif)',
+							type: 'radio',
+							click: selectFont,
+						},
+						{
+							id: 'monospace',
+							label: 'Courier New (monospace)',
+							type: 'radio',
+							click: selectFont,
+						},
+						{ label: 'Custom...', type: 'radio', click: selectFont, enabled: false },
+					],
+				},
+			],
 		},
 		{
 			label: 'Window',
