@@ -1,1 +1,22 @@
-<p>list works!</p>
+<ng-template #listContent>
+	@for (item of list.items; track item) {
+		<li>
+			@if (item.checked) {
+				<input type="checkbox">
+			}
+			@for (block of item.blocks; track block) {
+				<marka-block [block]="block" />
+			}
+		</li>
+	}
+</ng-template>
+
+@if (list.ordered) {
+	<ol>
+		<ng-container [ngTemplateOutlet]="listContent" />
+	</ol>
+} @else {
+	<ul>
+		<ng-container [ngTemplateOutlet]="listContent" />
+	</ul>
+}

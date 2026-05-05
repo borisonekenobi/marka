@@ -1,12 +1,13 @@
 import { contextBridge, ipcRenderer } from 'electron';
-import { Document } from '@marka-editor/markdown';
 
 contextBridge.exposeInMainWorld('marka', {
-	openFile: (): Promise<Document | null> => ipcRenderer.invoke('open-file'),
-	saveFile: (doc: Document): Promise<void> => ipcRenderer.invoke('save-file', doc),
+	onFileOpened: (callback: (doc: string) => void) => {
+		const handler = (_: Electron.IpcRendererEvent, doc: string) => callback(doc);
 
-	onFileOpened: (callback: (doc: any) => void) => {
-		ipcRenderer.on('file-opened', (_: Electron.IpcRendererEvent, doc: any) => callback(doc));
-		return () => ipcRenderer.removeAllListeners('file-opened');
+		ipcRenderer.on('file-opened', handler);
+
+		return () => {
+			ipcRenderer.removeListener('file-opened', handler);
+		};
 	},
 });

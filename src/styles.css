@@ -1,7 +1,12 @@
 /* You can add global styles to this file, and also import other style files */
 html,
 body {
+	overflow-y: auto;
 	margin: 0;
 	padding: 0;
 	border: 0;
+}
+
+html {
+	padding-top: 40px;
 }

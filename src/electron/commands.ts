@@ -1,6 +1,5 @@
-import { dialog, ipcMain } from 'electron';
-import { Document } from '@marka-editor/markdown';
-import { openFile } from './file-handlers.js';
+import { type BaseWindow, BrowserWindow, dialog } from 'electron';
+import fs from 'node:fs';
 
 export function newFile(): void {
 	console.log('new file');
@@ -12,25 +11,22 @@ export function newProject(): void {
 
 export async function open(
 	_menuItem: Electron.MenuItem,
-	window: Electron.BaseWindow | undefined,
-	_event: Electron.KeyboardEvent,
+	window: BaseWindow | undefined,
 ): Promise<void> {
-	window;
-	_event;
-
-	ipcMain.handle('open-file', async (): Promise<Document | null> => {
-		const result = await dialog.showOpenDialog({
-			properties: ['openFile'],
-		});
-
-		if (result.canceled || result.filePaths.length === 0) {
-			return null;
-		}
-
-		const filePath = result.filePaths[0]!;
-
-		return openFile(filePath);
+	const result = await dialog.showOpenDialog({
+		properties: ['openFile'],
 	});
+
+	if (result.canceled || result.filePaths.length === 0) {
+		return;
+	}
+
+	const filePath = result.filePaths[0]!;
+	const document = fs.readFileSync(filePath, 'utf8');
+	const targetWindow =
+		window instanceof BrowserWindow ? window : BrowserWindow.getFocusedWindow();
+
+	targetWindow?.webContents.send('file-opened', document);
 }
 
 export function openProjectFolder(): void {

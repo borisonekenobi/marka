@@ -1,4 +1,4 @@
-import { Component, Input } from '@angular/core';
+import { ChangeDetectionStrategy, Component, Input } from '@angular/core';
 import {
 	BlockElement,
 	Blockquote,
@@ -37,6 +37,7 @@ import { TableComponent } from '../table/table.component';
 	],
 	templateUrl: './block.component.html',
 	styleUrl: './block.component.css',
+	changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class BlockComponent {
 	@Input({ required: true })

@@ -1,17 +1,8 @@
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 
-import {
-	app,
-	BrowserWindow,
-	dialog,
-	ipcMain,
-	Menu,
-	type MenuItemConstructorOptions,
-} from 'electron';
+import { app, BrowserWindow, Menu, type MenuItemConstructorOptions } from 'electron';
 import squirrelStartup from 'electron-squirrel-startup';
-
-import { Document } from '@marka-editor/markdown';
 
 import {
 	about,
@@ -25,7 +16,6 @@ import {
 	save,
 	saveAs,
 } from './commands.js';
-import { openFile, saveFile } from './file-handlers.js';
 
 const __filename: string = fileURLToPath(import.meta.url);
 const __dirname: string = path.dirname(__filename);
@@ -34,25 +24,6 @@ const __dirname: string = path.dirname(__filename);
 if (squirrelStartup) {
 	app.quit();
 }
-
-// Open file
-ipcMain.handle('open-file', async () => {
-	const result = await dialog.showOpenDialog({
-		properties: ['openFile'],
-	});
-
-	if (result.canceled || result.filePaths.length === 0) {
-		return null;
-	}
-
-	const filePath = result.filePaths[0]!;
-	return openFile(filePath);
-});
-
-// Save file
-ipcMain.handle('save-file', async (_event, doc: Document): Promise<void> => {
-	saveFile('file.md', doc);
-});
 
 function createWindow(): void {
 	// Create the browser window.

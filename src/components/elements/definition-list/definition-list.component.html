@@ -1,1 +1,14 @@
-<p>definition-list works!</p>
+<dl>
+	@for (item of definitionList.items; track item) {
+		<dt>
+			@for (inline of item.inlines; track inline) {
+				<marka-inline [inline]="inline" />
+			}
+		</dt>
+		<dd>
+			@for (block of item.definitions; track block) {
+				<marka-block [block]="block" />
+			}
+		</dd>
+	}
+</dl>
