@@ -17,7 +17,10 @@ import {
 	saveAs,
 	selectFont,
 	selectTheme,
+	setFont,
+	setTheme,
 } from './commands.js';
+import { loadSettings, saveSettings, settings } from './models/settings.js';
 
 const __filename: string = fileURLToPath(import.meta.url);
 const __dirname: string = path.dirname(__filename);
@@ -30,8 +33,9 @@ if (squirrelStartup) {
 function createWindow(): void {
 	// Create the browser window.
 	const mainWindow = new BrowserWindow({
-		width: 800,
-		height: 600,
+		show: false,
+		width: settings.window.size.width,
+		height: settings.window.size.height,
 		icon: path.join(__dirname, 'favicon.png'),
 		webPreferences: {
 			preload: path.join(__dirname, 'preload.js'),
@@ -40,11 +44,27 @@ function createWindow(): void {
 		},
 	});
 
+	mainWindow.on('maximize', () => (settings.window.maximize = true));
+	mainWindow.on('unmaximize', () => (settings.window.maximize = false));
+	mainWindow.on('resized', () => {
+		const [width, height] = mainWindow.getSize();
+		if (width !== undefined && height !== undefined) {
+			settings.window.size = { width, height };
+		}
+	});
+	mainWindow.on('ready-to-show', async () => {
+		await setTheme(mainWindow, settings.theme);
+		await setFont(mainWindow, settings.font);
+		mainWindow.show();
+	});
+
+	if (settings.window.maximize) mainWindow.maximize();
+
 	// and load the index.html of the app.
 	mainWindow.loadFile(path.join(__dirname, 'index.html'));
 
 	// Open the DevTools.
-	mainWindow.webContents.openDevTools();
+	if (settings.dev) mainWindow.webContents.openDevTools();
 }
 
 function createMenu(): void {
@@ -52,6 +72,44 @@ function createMenu(): void {
 	for (const item of recents) {
 		item.click = openRecent;
 	}
+
+	const themes = [
+		{ id: 'theme-default-light', label: 'Light' },
+		{ id: 'theme-default-dark', label: 'Dark' },
+		{ id: 'theme-github-light', label: 'GitHub Light' },
+		{ id: 'theme-github-dark', label: 'GitHub Dark' },
+		{ id: 'theme-jetbrains-light', label: 'JetBrains Light' },
+		{ id: 'theme-jetbrains-dark', label: 'JetBrains Dark' },
+	];
+	const themeSubmenu: MenuItemConstructorOptions[] = themes.map((theme) => ({
+		id: theme.id,
+		label: theme.label,
+		type: 'radio',
+		checked: settings.theme === theme.id,
+		click: selectTheme,
+	}));
+
+	const fonts = [
+		{
+			id: 'sans-serif',
+			label: 'Arial (sans-serif)',
+		},
+		{
+			id: 'serif',
+			label: 'Times New Roman (serif)',
+		},
+		{
+			id: 'monospace',
+			label: 'Courier New (monospace)',
+		},
+	];
+	const fontSubmenu: MenuItemConstructorOptions[] = fonts.map((font) => ({
+		id: font.id,
+		label: font.label,
+		type: 'radio',
+		checked: settings.font === font.id,
+		click: selectFont,
+	}));
 
 	const template: MenuItemConstructorOptions[] = [
 		{
@@ -90,72 +148,8 @@ function createMenu(): void {
 				{ role: 'togglefullscreen' },
 				{ role: 'toggleDevTools' },
 				{ type: 'separator' },
-				{
-					label: 'Theme',
-					submenu: [
-						{
-							id: 'theme-default-light',
-							label: 'Light',
-							type: 'radio',
-							click: selectTheme,
-						},
-						{
-							id: 'theme-default-dark',
-							label: 'Dark',
-							type: 'radio',
-							click: selectTheme,
-						},
-						{
-							id: 'theme-github-light',
-							label: 'GitHub Light',
-							type: 'radio',
-							click: selectTheme,
-						},
-						{
-							id: 'theme-github-dark',
-							label: 'GitHub Dark',
-							type: 'radio',
-							click: selectTheme,
-						},
-						{
-							id: 'theme-jetbrains-light',
-							label: 'JetBrains Light',
-							type: 'radio',
-							click: selectTheme,
-						},
-						{
-							id: 'theme-jetbrains-dark',
-							label: 'JetBrains Dark',
-							type: 'radio',
-							click: selectTheme,
-						},
-						{ label: 'Custom...', type: 'radio', click: selectTheme, enabled: false },
-					],
-				},
-				{
-					label: 'Font',
-					submenu: [
-						{
-							id: 'sans-serif',
-							label: 'Arial (sans-serif)',
-							type: 'radio',
-							click: selectFont,
-						},
-						{
-							id: 'serif',
-							label: 'Times New Roman (serif)',
-							type: 'radio',
-							click: selectFont,
-						},
-						{
-							id: 'monospace',
-							label: 'Courier New (monospace)',
-							type: 'radio',
-							click: selectFont,
-						},
-						{ label: 'Custom...', type: 'radio', click: selectFont, enabled: false },
-					],
-				},
+				{ label: 'Theme', submenu: themeSubmenu },
+				{ label: 'Font', submenu: fontSubmenu },
 			],
 		},
 		{
@@ -175,7 +169,9 @@ function createMenu(): void {
 // This method will be called when Electron has finished
 // initialization and is ready to create browser windows.
 // Some APIs can only be used after this event occurs.
-app.whenReady().then((): void => {
+app.whenReady().then(async (): Promise<void> => {
+	loadSettings();
+
 	createWindow();
 	createMenu();
 
@@ -192,6 +188,7 @@ app.whenReady().then((): void => {
 // for applications and their menu bar to stay active until the user quits
 // explicitly with Cmd + Q.
 app.on('window-all-closed', (): void => {
+	saveSettings();
 	if (process.platform !== 'darwin') {
 		app.quit();
 	}

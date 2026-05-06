@@ -1,6 +1,8 @@
 import { type BaseWindow, BrowserWindow, dialog } from 'electron';
 import fs from 'node:fs';
 
+import { settings } from './models/settings.js';
+
 export function newFile(): void {
 	console.log('new file');
 }
@@ -63,14 +65,25 @@ export function about(): void {
 	console.log('about');
 }
 
+export async function setTheme(targetWindow: BrowserWindow, theme: string): Promise<void> {
+	settings.theme = theme;
+	targetWindow.webContents.send('theme-changed', theme);
+}
+
 export async function selectTheme(
 	_menuItem: Electron.MenuItem,
 	window: BaseWindow | undefined,
 ): Promise<void> {
 	const targetWindow =
 		window instanceof BrowserWindow ? window : BrowserWindow.getFocusedWindow();
+	if (!targetWindow) return;
 
-	targetWindow?.webContents.send('theme-changed', _menuItem.id);
+	await setTheme(targetWindow, _menuItem.id);
+}
+
+export async function setFont(targetWindow: BrowserWindow, font: string): Promise<void> {
+	settings.font = font;
+	targetWindow.webContents.send('font-changed', font);
 }
 
 export async function selectFont(
@@ -79,6 +92,7 @@ export async function selectFont(
 ): Promise<void> {
 	const targetWindow =
 		window instanceof BrowserWindow ? window : BrowserWindow.getFocusedWindow();
+	if (!targetWindow) return;
 
-	targetWindow?.webContents.send('font-changed', _menuItem.id);
+	await setFont(targetWindow, _menuItem.id);
 }
