@@ -36,8 +36,9 @@ function createWindow(): void {
 		show: false,
 		width: settings.window.size.width,
 		height: settings.window.size.height,
-		icon: path.join(__dirname, 'favicon.png'),
+		icon: path.join(__dirname, settings.r2d2 ? 'r2d2.png' : 'favicon.png'),
 		webPreferences: {
+			devTools: settings.dev,
 			preload: path.join(__dirname, 'preload.js'),
 			contextIsolation: true,
 			nodeIntegration: false,
@@ -62,9 +63,6 @@ function createWindow(): void {
 
 	// and load the index.html of the app.
 	mainWindow.loadFile(path.join(__dirname, 'index.html'));
-
-	// Open the DevTools.
-	if (settings.dev) mainWindow.webContents.openDevTools();
 }
 
 function createMenu(): void {
@@ -146,7 +144,7 @@ function createMenu(): void {
 			label: 'View',
 			submenu: [
 				{ role: 'togglefullscreen' },
-				{ role: 'toggleDevTools' },
+				{ role: 'toggleDevTools', visible: settings.dev },
 				{ type: 'separator' },
 				{ label: 'Theme', submenu: themeSubmenu },
 				{ label: 'Font', submenu: fontSubmenu },

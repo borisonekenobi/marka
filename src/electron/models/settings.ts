@@ -13,6 +13,7 @@ interface Settings {
 		};
 		maximize: boolean;
 	};
+	r2d2: boolean;
 	theme: string;
 	customThemes: Theme[];
 	font: string;
@@ -27,6 +28,7 @@ const defaultSettings: Settings = {
 		},
 		maximize: false,
 	},
+	r2d2: false,
 	theme: 'theme-default-light',
 	customThemes: [],
 	font: 'sans-serif',
