@@ -8,7 +8,7 @@ nav {
 	align-items: center;
 	justify-content: flex-start;
 	margin: 0.5rem 1rem;
-	border-radius: var(--app-radius);
+	border-radius: var(--nav-radius);
 	background: var(--nav-bg-color);
 	gap: 0;
 }

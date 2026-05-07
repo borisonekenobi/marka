@@ -74,6 +74,10 @@ function createMenu(): void {
 	const themes = [
 		{ id: 'theme-default-light', label: 'Light' },
 		{ id: 'theme-default-dark', label: 'Dark' },
+		{ id: 'theme-google-docs-light', label: 'Google Docs Light' },
+		// { id: 'theme-google-docs-dark', label: 'Google Docs Dark' },
+		// { id: 'theme-ms-word-light', label: 'Microsoft Word Light' },
+		// { id: 'theme-ms-word-dark', label: 'Microsoft Word Dark' },
 		{ id: 'theme-github-light', label: 'GitHub Light' },
 		{ id: 'theme-github-dark', label: 'GitHub Dark' },
 		{ id: 'theme-jetbrains-light', label: 'JetBrains Light' },

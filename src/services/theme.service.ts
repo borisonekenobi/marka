@@ -7,6 +7,10 @@ export class ThemeService {
 	private readonly themes: string[] = [
 		'theme-default-light',
 		'theme-default-dark',
+		'theme-google-docs-light',
+		// 'theme-google-docs-dark',
+		// 'theme-ms-word-light',
+		// 'theme-ms-word-dark',
 		'theme-github-light',
 		'theme-github-dark',
 		'theme-jetbrains-light',
