@@ -6,20 +6,20 @@ import {
 	OnDestroy,
 	OnInit,
 } from '@angular/core';
-import { Document, parse } from '@marka-editor/markdown';
-import { BlockComponent } from '../elements/block/block.component';
+import { tmpParse, tmpSerialize } from '@marka-editor/markdown';
 
 @Component({
 	selector: 'marka-editor',
 	standalone: true,
-	imports: [BlockComponent],
+	imports: [],
 	templateUrl: './editor.component.html',
 	styleUrl: './editor.component.css',
 	changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class EditorComponent implements OnInit, OnDestroy {
-	public doc?: Document;
-	private unsubscribe?: () => void;
+	private editor!: HTMLElement;
+	private unsubscribeFileOpened?: () => void;
+	private unsubscribeFileSave?: () => void;
 
 	constructor(
 		private readonly zone: NgZone,
@@ -27,15 +27,31 @@ export class EditorComponent implements OnInit, OnDestroy {
 	) {}
 
 	ngOnInit(): void {
-		this.unsubscribe = window.marka.onFileOpened((doc: string) => {
-			this.zone.run(() => {
-				this.doc = parse(doc);
-				this.cdr.markForCheck();
-			});
+		this.editor = document.getElementById('editor')!;
+		this.unsubscribeFileOpened = window.marka.onFileOpened(
+			(markdown: string): Promise<void> => this.renderFile(markdown),
+		);
+		this.unsubscribeFileSave = window.marka.onFileSave(
+			(action: 'save' | 'save-as'): Promise<void> => this.saveFile(action),
+		);
+	}
+
+	async renderFile(markdown: string): Promise<void> {
+		await this.zone.run(async (): Promise<void> => {
+			this.editor.innerHTML = await tmpParse(markdown);
+			this.cdr.markForCheck();
 		});
 	}
 
+	async saveFile(action: 'save' | 'save-as'): Promise<void> {
+		const markdown: string = await tmpSerialize(this.editor.innerHTML);
+
+		if (action === 'save') await window.marka.saveFile(markdown);
+		else await window.marka.saveAsFile(markdown);
+	}
+
 	ngOnDestroy(): void {
-		this.unsubscribe?.();
+		this.unsubscribeFileOpened?.();
+		this.unsubscribeFileSave?.();
 	}
 }

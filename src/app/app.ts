@@ -69,12 +69,12 @@ export class App implements OnInit, OnDestroy {
 		this.themeService.initTheme();
 		this.themeService.initFont();
 
-		this.unsubscribeTheme = window.marka.onThemeChanged((theme: string) => {
-			this.themeService.setTheme(theme);
-		});
-		this.unsubscribeFont = window.marka.onFontChanged((font: string) => {
-			this.themeService.setFont(font);
-		});
+		this.unsubscribeTheme = window.marka.onThemeChanged((theme: string): void =>
+			this.themeService.setTheme(theme),
+		);
+		this.unsubscribeFont = window.marka.onFontChanged((font: string): void =>
+			this.themeService.setFont(font),
+		);
 	}
 
 	ngOnDestroy(): void {

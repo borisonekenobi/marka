@@ -1,7 +1,17 @@
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
+import fs from 'node:fs';
+import * as iconv from 'iconv-lite';
 
-import { app, BrowserWindow, Menu, type MenuItemConstructorOptions } from 'electron';
+import {
+	app,
+	BrowserWindow,
+	dialog,
+	ipcMain,
+	type IpcMainInvokeEvent,
+	Menu,
+	type MenuItemConstructorOptions,
+} from 'electron';
 import squirrelStartup from 'electron-squirrel-startup';
 
 import {
@@ -21,6 +31,7 @@ import {
 	setTheme,
 } from './commands.js';
 import { loadSettings, saveSettings, settings } from './models/settings.js';
+import { getCurrentFile } from './models/current-file.js';
 
 const __filename: string = fileURLToPath(import.meta.url);
 const __dirname: string = path.dirname(__filename);
@@ -198,3 +209,31 @@ app.on('window-all-closed', (): void => {
 
 // In this file you can include the rest of your app's specific main process
 // code. You can also put them in separate files and import them here.
+ipcMain.handle('save-file', saveFile);
+ipcMain.handle('save-as-file', saveAsFile);
+
+async function saveFile(event: IpcMainInvokeEvent, markdown: string): Promise<void> {
+	const targetWindow = BrowserWindow.fromWebContents(event.sender);
+	if (!targetWindow) return;
+
+	let currentFile = getCurrentFile(targetWindow.id);
+	if (!currentFile) return await saveAsFile(event, markdown);
+
+	fs.writeFileSync(currentFile.filePath, iconv.encode(markdown, currentFile.encoding));
+}
+
+async function saveAsFile(event: IpcMainInvokeEvent, markdown: string): Promise<void> {
+	const targetWindow = BrowserWindow.fromWebContents(event.sender);
+	if (!targetWindow) return;
+
+	const result = dialog.showSaveDialogSync(targetWindow, {
+		properties: ['showOverwriteConfirmation'],
+		filters: [
+			{ name: 'Markdown Files', extensions: ['md'] },
+			{ name: 'All Files', extensions: ['*'] },
+		],
+	});
+	if (!result) return;
+
+	fs.writeFileSync(result, iconv.encode(markdown, 'utf8'));
+}
