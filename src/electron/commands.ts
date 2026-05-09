@@ -6,12 +6,33 @@ import * as iconv from 'iconv-lite';
 import { settings } from './models/settings.js';
 import { setCurrentFile } from './models/current-file.js';
 
-export function newFile(): void {
-	console.log('new file');
+export function newFile(_menuItem: Electron.MenuItem, window: BaseWindow | undefined): void {
+	const targetWindow = getTargetWindow(window);
+	if (!targetWindow) return;
+
+	const result = dialog.showSaveDialogSync(targetWindow, {
+		properties: ['showOverwriteConfirmation'],
+		filters: [
+			{ name: 'Markdown Files', extensions: ['md'] },
+			{ name: 'All Files', extensions: ['*'] },
+		],
+	});
+	if (!result) return;
+
+	fs.writeFileSync(result, iconv.encode('', 'utf8'));
+	fileOpen(targetWindow, result);
 }
 
 export function newProject(): void {
 	console.log('new project');
+}
+
+function fileOpen(targetWindow: BrowserWindow, filePath: string): void {
+	const document = fs.readFileSync(filePath);
+	const encoding = chardet.detect(document) || 'utf8';
+	setCurrentFile(targetWindow.id, { filePath, encoding });
+
+	targetWindow.webContents.send('file-opened', iconv.decode(document, encoding));
 }
 
 export async function open(
@@ -31,11 +52,7 @@ export async function open(
 	if (!result) return;
 
 	const filePath = result[0]!;
-	const document = fs.readFileSync(filePath);
-	const encoding = chardet.detect(document) || 'utf8';
-	setCurrentFile(targetWindow.id, { filePath, encoding });
-
-	targetWindow.webContents.send('file-opened', iconv.decode(document, encoding));
+	fileOpen(targetWindow, filePath);
 }
 
 export function openProjectFolder(): void {
