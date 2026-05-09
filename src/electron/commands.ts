@@ -42,20 +42,14 @@ export function openProjectFolder(): void {
 	console.log('open project folder');
 }
 
-export async function save(
-	_menuItem: Electron.MenuItem,
-	window: BaseWindow | undefined,
-): Promise<void> {
+export function save(_menuItem: Electron.MenuItem, window: BaseWindow | undefined): void {
 	const targetWindow = getTargetWindow(window);
 	if (!targetWindow) return;
 
 	targetWindow.webContents.send('file-save', 'save');
 }
 
-export async function saveAs(
-	_menuItem: Electron.MenuItem,
-	window: BaseWindow | undefined,
-): Promise<void> {
+export function saveAs(_menuItem: Electron.MenuItem, window: BaseWindow | undefined): void {
 	const targetWindow = getTargetWindow(window);
 	if (!targetWindow) return;
 
@@ -66,8 +60,11 @@ export function rename(): void {
 	console.log('rename');
 }
 
-export function close(): void {
-	console.log('close');
+export function close(_menuItem: Electron.MenuItem, window: BaseWindow | undefined): void {
+	const targetWindow = getTargetWindow(window);
+	if (!targetWindow) return;
+
+	targetWindow.webContents.send('file-close');
 }
 
 export function openRecent(): void {

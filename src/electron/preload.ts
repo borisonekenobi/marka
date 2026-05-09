@@ -3,8 +3,11 @@ import { contextBridge, ipcRenderer } from 'electron';
 contextBridge.exposeInMainWorld('marka', {
 	onFileOpened,
 	onFileSave,
-	saveFile: (markdown: string): Promise<void> => ipcRenderer.invoke('save-file', markdown),
-	saveAsFile: (markdown: string): Promise<void> => ipcRenderer.invoke('save-as-file', markdown),
+	onFileClose,
+	confirmClose: (markdown: string): Promise<boolean> => ipcRenderer.invoke('confirm', markdown),
+	saveFile: (markdown: string): Promise<boolean> => ipcRenderer.invoke('save-file', markdown),
+	saveAsFile: (markdown: string): Promise<boolean> =>
+		ipcRenderer.invoke('save-as-file', markdown),
 	onThemeChanged,
 	onFontChanged,
 });
@@ -28,6 +31,16 @@ function onFileSave(callback: (action: 'save' | 'save-as') => Promise<void>): ()
 
 	return (): void => {
 		ipcRenderer.removeListener('file-save', handler);
+	};
+}
+
+function onFileClose(callback: () => Promise<void>): () => void {
+	const handler = (_: Electron.IpcRendererEvent): Promise<void> => callback();
+
+	ipcRenderer.on('file-close', handler);
+
+	return (): void => {
+		ipcRenderer.removeListener('file-close', handler);
 	};
 }
 

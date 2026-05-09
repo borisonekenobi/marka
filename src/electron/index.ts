@@ -211,20 +211,22 @@ app.on('window-all-closed', (): void => {
 // code. You can also put them in separate files and import them here.
 ipcMain.handle('save-file', saveFile);
 ipcMain.handle('save-as-file', saveAsFile);
+ipcMain.handle('confirm', confirmUnsavedChanges);
 
-async function saveFile(event: IpcMainInvokeEvent, markdown: string): Promise<void> {
+async function saveFile(event: IpcMainInvokeEvent, markdown: string): Promise<boolean> {
 	const targetWindow = BrowserWindow.fromWebContents(event.sender);
-	if (!targetWindow) return;
+	if (!targetWindow) return false;
 
 	let currentFile = getCurrentFile(targetWindow.id);
 	if (!currentFile) return await saveAsFile(event, markdown);
 
 	fs.writeFileSync(currentFile.filePath, iconv.encode(markdown, currentFile.encoding));
+	return true;
 }
 
-async function saveAsFile(event: IpcMainInvokeEvent, markdown: string): Promise<void> {
+async function saveAsFile(event: IpcMainInvokeEvent, markdown: string): Promise<boolean> {
 	const targetWindow = BrowserWindow.fromWebContents(event.sender);
-	if (!targetWindow) return;
+	if (!targetWindow) return false;
 
 	const result = dialog.showSaveDialogSync(targetWindow, {
 		properties: ['showOverwriteConfirmation'],
@@ -233,7 +235,33 @@ async function saveAsFile(event: IpcMainInvokeEvent, markdown: string): Promise<
 			{ name: 'All Files', extensions: ['*'] },
 		],
 	});
-	if (!result) return;
+	if (!result) return false;
 
 	fs.writeFileSync(result, iconv.encode(markdown, 'utf8'));
+	return true;
+}
+
+async function confirmUnsavedChanges(
+	event: IpcMainInvokeEvent,
+	markdown: string,
+): Promise<boolean> {
+	const targetWindow = BrowserWindow.fromWebContents(event.sender);
+	if (!targetWindow) return false;
+
+	const result = dialog.showMessageBoxSync(targetWindow, {
+		type: 'warning',
+		title: 'Unsaved Changes',
+		message: 'Close without saving?',
+		detail: 'The file has unsaved changes. Are you sure you want to close?',
+		buttons: ['Save and Close', 'Discard and Close', 'Cancel'],
+		defaultId: 0,
+		cancelId: 2,
+		noLink: true,
+	});
+
+	if (result === 0) {
+		return await saveFile(event, markdown);
+	} else {
+		return result === 1;
+	}
 }
