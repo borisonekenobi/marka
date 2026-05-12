@@ -3,6 +3,7 @@ import { NavbarComponent } from '../components/navbar/navbar.component';
 import { NavElementOption } from '../models/nav-element';
 import { EditorComponent } from '../components/editor/editor.component';
 import { ThemeService } from '../services/theme.service';
+import { DocumentCommand } from '../models/document-command';
 
 @Component({
 	selector: 'app-root',
@@ -18,51 +19,50 @@ export class App implements OnInit, OnDestroy {
 	constructor(private readonly themeService: ThemeService) {}
 
 	public static undo(): void {
-		console.log('undo');
+		App.executeCommand('undo');
 	}
 
 	public static redo(): void {
-		console.log('redo');
+		App.executeCommand('redo');
 	}
 
 	public static selectStyleOption(option: NavElementOption): void {
-		console.log('Selected option:', option);
+		App.executeCommand('formatBlock', option.elementType);
 	}
 
 	public static bold(): void {
-		console.log('bold');
+		App.executeCommand('bold');
 	}
 
 	public static italic(): void {
-		console.log('italic');
+		App.executeCommand('italic');
 	}
 
-	public static insertLink(): void {
-		console.log('insert link');
+	public static async insertLink(): Promise<void> {
+		const link = await window.marka.chooseLink();
+		if (link) App.executeCommand('createLink', link);
 	}
 
-	public static insertImage(): void {
-		console.log('insert image');
+	public static async insertImage(): Promise<void> {
+		const img = await window.marka.chooseImg();
+		if (img) App.executeCommand('insertImage', img);
 	}
 
 	public static insertChecklist(): void {
-		console.log('insert checklist');
+		App.executeCommand('insertUnorderedList');
+		// TODO: also create checkbox
 	}
 
 	public static insertBulletedList(): void {
-		console.log('insert bulleted list');
+		App.executeCommand('insertUnorderedList');
 	}
 
 	public static insertNumberedList(): void {
-		console.log('insert numbered list');
+		App.executeCommand('insertOrderedList');
 	}
 
-	public static decreaseIndent(): void {
-		console.log('decrease indent');
-	}
-
-	public static increaseIndent(): void {
-		console.log('increase indent');
+	private static executeCommand(commandId: DocumentCommand, value?: string): void {
+		document.execCommand(commandId, false, value);
 	}
 
 	ngOnInit(): void {

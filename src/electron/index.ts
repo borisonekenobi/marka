@@ -213,6 +213,9 @@ ipcMain.handle('save-file', saveFile);
 ipcMain.handle('save-as-file', saveAsFile);
 ipcMain.handle('confirm', confirmUnsavedChanges);
 
+ipcMain.handle('choose-link', chooseLink);
+ipcMain.handle('choose-img', chooseImg);
+
 async function saveFile(event: IpcMainInvokeEvent, markdown: string): Promise<boolean> {
 	const targetWindow = BrowserWindow.fromWebContents(event.sender);
 	if (!targetWindow) return false;
@@ -264,4 +267,201 @@ async function confirmUnsavedChanges(
 	} else {
 		return result === 1;
 	}
+}
+
+async function chooseLink(event: IpcMainInvokeEvent): Promise<string | undefined> {
+	const targetWindow = BrowserWindow.fromWebContents(event.sender);
+	if (!targetWindow) return '';
+
+	const dialogWindow = new BrowserWindow({
+		parent: targetWindow,
+		modal: true,
+		show: false,
+		width: 520,
+		height: 180,
+		resizable: false,
+		minimizable: false,
+		maximizable: false,
+		webPreferences: {
+			nodeIntegration: true,
+			contextIsolation: false,
+		},
+	});
+
+	const submitChannel = `choose-link-submit-${dialogWindow.id}-${Date.now()}`;
+	const cancelChannel = `choose-link-cancel-${dialogWindow.id}-${Date.now()}`;
+
+	// TODO: extract
+	const html = `<!doctype html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8" />
+	<title>Insert Link</title>
+	<style>
+		:root { color-scheme: light dark; }
+		body { margin: 0; padding: 16px; font-family: Arial, sans-serif; }
+		h3 { margin: 0 0 10px; font-size: 16px; }
+		input { width: 100%; box-sizing: border-box; padding: 8px; margin-bottom: 12px; }
+		.actions { display: flex; justify-content: flex-end; gap: 8px; }
+		button { padding: 6px 12px; }
+	</style>
+</head>
+<body>
+<h3>Insert link</h3>
+<input id="link" type="url" placeholder="https://example.com" autofocus />
+<div class="actions">
+	<button id="cancel">Cancel</button>
+	<button id="submit">Insert</button>
+</div>
+<script>
+	const { ipcRenderer } = require('electron');
+	const input = document.getElementById('link');
+	const submit = () => ipcRenderer.send('${submitChannel}', (input.value || '').trim());
+	document.getElementById('submit').addEventListener('click', submit);
+	document.getElementById('cancel').addEventListener('click', () => ipcRenderer.send('${cancelChannel}'));
+	input.addEventListener('keydown', (ev) => {
+		if (ev.key === 'Enter') submit();
+		if (ev.key === 'Escape') ipcRenderer.send('${cancelChannel}');
+	});
+</script>
+</body>
+</html>`;
+
+	dialogWindow.loadURL(`data:text/html;charset=utf-8,${encodeURIComponent(html)}`);
+
+	return await new Promise<string | undefined>((resolve) => {
+		const cleanup = (): void => {
+			ipcMain.removeAllListeners(submitChannel);
+			ipcMain.removeAllListeners(cancelChannel);
+		};
+
+		ipcMain.once(submitChannel, (_evt, link: string) => {
+			cleanup();
+			if (!dialogWindow.isDestroyed()) dialogWindow.close();
+			resolve(link);
+		});
+
+		ipcMain.once(cancelChannel, () => {
+			cleanup();
+			if (!dialogWindow.isDestroyed()) dialogWindow.close();
+			resolve(undefined);
+		});
+
+		dialogWindow.once('ready-to-show', () => dialogWindow.show());
+		dialogWindow.once('closed', () => {
+			cleanup();
+			resolve(undefined);
+		});
+	});
+}
+
+async function chooseImg(event: IpcMainInvokeEvent): Promise<string | undefined> {
+	const targetWindow = BrowserWindow.fromWebContents(event.sender);
+	if (!targetWindow) return '';
+
+	const dialogWindow = new BrowserWindow({
+		parent: targetWindow,
+		modal: true,
+		show: false,
+		width: 560,
+		height: 220,
+		resizable: false,
+		minimizable: false,
+		maximizable: false,
+		webPreferences: {
+			nodeIntegration: true,
+			contextIsolation: false,
+		},
+	});
+
+	const submitChannel = `choose-img-submit-${dialogWindow.id}-${Date.now()}`;
+	const cancelChannel = `choose-img-cancel-${dialogWindow.id}-${Date.now()}`;
+	const browseChannel = `choose-img-browse-${dialogWindow.id}-${Date.now()}`;
+
+	// TODO: extract
+	const html = `<!doctype html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8" />
+	<title>Insert Image</title>
+	<style>
+		:root { color-scheme: light dark; }
+		body { margin: 0; padding: 16px; font-family: Arial, sans-serif; }
+		h3 { margin: 0 0 10px; font-size: 16px; }
+		.row { display: flex; gap: 8px; margin-bottom: 12px; }
+		input { flex: 1; box-sizing: border-box; padding: 8px; }
+		.actions { display: flex; justify-content: flex-end; gap: 8px; }
+		button { padding: 6px 12px; }
+	</style>
+</head>
+<body>
+<h3>Insert image</h3>
+<div class="row">
+	<input id="img" type="text" placeholder="https://example.com/image.png or local path" autofocus />
+	<button id="browse">Upload...</button>
+</div>
+<div class="actions">
+	<button id="cancel">Cancel</button>
+	<button id="submit">Insert</button>
+</div>
+<script>
+	const { ipcRenderer } = require('electron');
+	const input = document.getElementById('img');
+	const submit = () => ipcRenderer.send('${submitChannel}', (input.value || '').trim());
+	document.getElementById('submit').addEventListener('click', submit);
+	document.getElementById('cancel').addEventListener('click', () => ipcRenderer.send('${cancelChannel}'));
+	document.getElementById('browse').addEventListener('click', async () => {
+		const selected = await ipcRenderer.invoke('${browseChannel}');
+		if (selected) input.value = selected;
+	});
+	input.addEventListener('keydown', (ev) => {
+		if (ev.key === 'Enter') submit();
+		if (ev.key === 'Escape') ipcRenderer.send('${cancelChannel}');
+	});
+</script>
+</body>
+</html>`;
+
+	ipcMain.handle(browseChannel, () => {
+		const result = dialog.showOpenDialogSync(dialogWindow, {
+			properties: ['openFile'],
+			filters: [
+				{
+					name: 'Image Files',
+					extensions: ['png', 'jpg', 'jpeg', 'gif', 'webp', 'svg', 'bmp'],
+				},
+				{ name: 'All Files', extensions: ['*'] },
+			],
+		});
+
+		return result && result[0] ? result[0] : '';
+	});
+
+	dialogWindow.loadURL(`data:text/html;charset=utf-8,${encodeURIComponent(html)}`);
+
+	return await new Promise<string | undefined>((resolve) => {
+		const cleanup = (): void => {
+			ipcMain.removeAllListeners(submitChannel);
+			ipcMain.removeAllListeners(cancelChannel);
+			ipcMain.removeHandler(browseChannel);
+		};
+
+		ipcMain.once(submitChannel, (_evt, value: string) => {
+			cleanup();
+			if (!dialogWindow.isDestroyed()) dialogWindow.close();
+			resolve(value);
+		});
+
+		ipcMain.once(cancelChannel, () => {
+			cleanup();
+			if (!dialogWindow.isDestroyed()) dialogWindow.close();
+			resolve(undefined);
+		});
+
+		dialogWindow.once('ready-to-show', () => dialogWindow.show());
+		dialogWindow.once('closed', () => {
+			cleanup();
+			resolve(undefined);
+		});
+	});
 }

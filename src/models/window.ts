@@ -13,6 +13,9 @@ declare global {
 
 			onThemeChanged: (callback: (theme: string) => void) => () => void;
 			onFontChanged: (callback: (font: string) => void) => () => void;
+
+			chooseLink: () => Promise<string | undefined>;
+			chooseImg: () => Promise<string | undefined>;
 		};
 	}
 }

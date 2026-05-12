@@ -4,12 +4,17 @@ contextBridge.exposeInMainWorld('marka', {
 	onFileOpened,
 	onFileSave,
 	onFileClose,
+
 	confirmClose: (markdown: string): Promise<boolean> => ipcRenderer.invoke('confirm', markdown),
 	saveFile: (markdown: string): Promise<boolean> => ipcRenderer.invoke('save-file', markdown),
 	saveAsFile: (markdown: string): Promise<boolean> =>
 		ipcRenderer.invoke('save-as-file', markdown),
+
 	onThemeChanged,
 	onFontChanged,
+
+	chooseLink: (): Promise<string | undefined> => ipcRenderer.invoke('choose-link'),
+	chooseImg: (): Promise<string | undefined> => ipcRenderer.invoke('choose-img'),
 });
 
 function onFileOpened(callback: (markdown: string) => Promise<void>): () => void {

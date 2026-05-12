@@ -89,15 +89,5 @@ export class NavbarComponent {
 			onclick: App.insertNumberedList,
 			path: 'M144-144v-48h96v-24h-48v-48h48v-24h-96v-48h120q10.2 0 17.1 6.9 6.9 6.9 6.9 17.1v48q0 10.2-6.9 17.1-6.9 6.9-17.1 6.9 10.2 0 17.1 6.9 6.9 6.9 6.9 17.1v48q0 10.2-6.9 17.1-6.9 6.9-17.1 6.9H144Zm0-240v-96q0-10.2 6.9-17.1 6.9-6.9 17.1-6.9h72v-24h-96v-48h120q10.2 0 17.1 6.9 6.9 6.9 6.9 17.1v72q0 10.2-6.9 17.1-6.9 6.9-17.1 6.9h-72v24h96v48H144Zm48-240v-144h-48v-48h96v192h-48Zm168 384v-72h456v72H360Zm0-204v-72h456v72H360Zm0-204v-72h456v72H360Z',
 		}),
-		new ButtonNavElement({
-			name: 'Decrease Indent (Shift+Tab)',
-			onclick: App.decreaseIndent,
-			path: 'M144-144v-72h672v72H144Zm288-150v-72h384v72H432Zm0-150v-72h384v72H432Zm0-150v-72h384v72H432ZM144-744v-72h672v72H144Zm144 408L144-480l144-144v288Z',
-		}),
-		new ButtonNavElement({
-			name: 'Increase Indent (Tab)',
-			onclick: App.increaseIndent,
-			path: 'M144-144v-72h672v72H144Zm288-150v-72h384v72H432Zm0-150v-72h384v72H432Zm0-150v-72h384v72H432ZM144-744v-72h672v72H144Zm0 408v-288l144 144-144 144Z',
-		}),
 	];
 }
