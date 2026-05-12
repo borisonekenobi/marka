@@ -34,8 +34,20 @@ function onFileSave(callback: (action: 'save' | 'save-as') => Promise<void>): ()
 	};
 }
 
-function onFileClose(callback: () => Promise<void>): () => void {
-	const handler = (_: Electron.IpcRendererEvent): Promise<void> => callback();
+function onFileClose(callback: () => Promise<boolean>): () => void {
+	const handler = async (_: Electron.IpcRendererEvent, replyChannel?: string): Promise<void> => {
+		try {
+			const result = await callback();
+			if (replyChannel) {
+				ipcRenderer.send(replyChannel, result);
+			}
+		} catch (err) {
+			console.error(err);
+			if (replyChannel) {
+				ipcRenderer.send(replyChannel, false);
+			}
+		}
+	};
 
 	ipcRenderer.on('file-close', handler);
 

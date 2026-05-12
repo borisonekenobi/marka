@@ -38,7 +38,9 @@ export class EditorComponent implements OnInit, OnDestroy {
 		this.unsubscribeFileSave = window.marka.onFileSave(
 			(action: 'save' | 'save-as'): Promise<void> => this.saveFile(action),
 		);
-		this.unsubscribeFileClose = window.marka.onFileClose((): Promise<void> => this.closeFile());
+		this.unsubscribeFileClose = window.marka.onFileClose(
+			(): Promise<boolean> => this.closeFile(),
+		);
 	}
 
 	async renderFile(markdown: string): Promise<void> {
@@ -60,16 +62,17 @@ export class EditorComponent implements OnInit, OnDestroy {
 		if (saved) this.edited = false;
 	}
 
-	async closeFile(): Promise<void> {
+	async closeFile(): Promise<boolean> {
 		if (this.edited) {
 			const markdown: string = await tmpSerialize(this.editor.innerHTML);
 			const confirmed: boolean = await window.marka.confirmClose(markdown);
-			if (!confirmed) return;
+			if (!confirmed) return false;
 		}
 
 		this.editor.innerHTML = '';
 		this.edited = false;
 		this.cdr.markForCheck();
+		return true;
 	}
 
 	ngOnDestroy(): void {

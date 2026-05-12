@@ -5,7 +5,7 @@ declare global {
 		marka: {
 			onFileOpened: (callback: (markdown: string) => Promise<void>) => () => void;
 			onFileSave: (callback: (action: 'save' | 'save-as') => Promise<void>) => () => void;
-			onFileClose: (callback: () => Promise<void>) => () => void;
+			onFileClose: (callback: () => Promise<boolean>) => () => void;
 
 			confirmClose: (markdown: string) => Promise<boolean>;
 			saveFile: (markdown: string) => Promise<boolean>;
