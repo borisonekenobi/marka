@@ -8,12 +8,12 @@ export interface ClickableNavElement extends NavElement {
 export class ButtonNavElement implements ClickableNavElement {
 	name: string;
 	onclick: CallableFunction;
-	path: string;
+	svg: string;
 
-	constructor(init: { name: string; onclick: CallableFunction; path: string }) {
+	constructor(init: { name: string; onclick: CallableFunction; svg: string }) {
 		this.name = init.name;
 		this.onclick = init.onclick;
-		this.path = init.path;
+		this.svg = init.svg;
 	}
 }
 

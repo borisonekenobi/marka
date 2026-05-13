@@ -18,7 +18,11 @@ export class ThemeService {
 	];
 	private readonly fonts: string[] = ['sans-serif', 'serif', 'monospace'];
 
-	setTheme(theme: string): void {
+	public getTheme(): string {
+		return localStorage.getItem('theme') || this.themes[0];
+	}
+
+	public setTheme(theme: string): void {
 		if (!this.themes.includes(theme)) {
 			return;
 		}
@@ -31,12 +35,11 @@ export class ThemeService {
 		localStorage.setItem('theme', theme);
 	}
 
-	initTheme(): void {
-		const saved = localStorage.getItem('theme') || this.themes[0];
-		this.setTheme(saved);
+	public initTheme(): void {
+		this.setTheme(this.getTheme());
 	}
 
-	setFont(font: string): void {
+	public setFont(font: string): void {
 		if (!this.fonts.includes(font)) {
 			return;
 		}
@@ -49,7 +52,7 @@ export class ThemeService {
 		localStorage.setItem('font', font);
 	}
 
-	initFont(): void {
+	public initFont(): void {
 		const saved = localStorage.getItem('font') || this.fonts[0];
 		this.setFont(saved);
 	}
