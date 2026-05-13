@@ -3,6 +3,7 @@ div {
 	min-height: calc(100vh - 72px);
 	margin: 0.5rem 1rem;
 	padding: 0.5rem;
+	border: 2px solid var(--editor-border-color);
 	border-radius: var(--editor-radius);
 	background: var(--editor-bg-color);
 }
