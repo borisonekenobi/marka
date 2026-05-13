@@ -13,6 +13,8 @@ import { DocumentCommand } from '../models/document-command';
 	styleUrl: './app.css',
 })
 export class App implements OnInit, OnDestroy {
+	private static editor: HTMLDivElement;
+
 	private unsubscribeTheme?: () => void;
 	private unsubscribeFont?: () => void;
 
@@ -62,10 +64,14 @@ export class App implements OnInit, OnDestroy {
 	}
 
 	private static executeCommand(commandId: DocumentCommand, value?: string): void {
+		App.editor.focus();
 		document.execCommand(commandId, false, value);
 	}
 
 	ngOnInit(): void {
+		App.editor = document.getElementById('editor')! as HTMLDivElement;
+		App.editor.focus();
+
 		this.themeService.initTheme();
 		this.themeService.initFont();
 
