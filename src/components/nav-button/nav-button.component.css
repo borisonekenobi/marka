@@ -4,8 +4,8 @@ button {
 	display: inline-flex;
 	align-items: center;
 	justify-content: center;
-	margin: 3px;
-	padding: 3px;
+	width: var(--nav-button-size);
+	height: var(--nav-button-size);
 	cursor: pointer;
 	transition: background-color 150ms ease,
 	color 150ms ease;
@@ -22,6 +22,6 @@ button:hover {
 
 svg {
 	display: block;
-	width: 20px;
-	height: 20px;
+	width: var(--nav-button-svg-size);
+	height: var(--nav-button-svg-size);
 }

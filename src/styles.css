@@ -1,7 +1,7 @@
 /* You can add global styles to this file, and also import other style files */
 *:focus, input:focus {
 	outline: 2px solid var(--editor-focused-border-color);
-	outline-offset: -1px;
+	outline-offset: -2px;
 }
 
 html,
@@ -37,22 +37,26 @@ html {
 	--app-bg-color: #fff;
 	--app-font-size: 16px;
 
-	--nav-bg-color: lightgray;
-	--nav-fg-color: #222;
-	--nav-separator-color: dimgray;
+	--nav-bg-color: #edf2fa;
+	--nav-fg-color: #474747;
 	--nav-radius: 0;
+	--nav-border-color: #edf2fa;
+	--nav-button-size: 32px;
+	--nav-button-svg-size: 20px;
+	--nav-separator-color: dimgray;
+	--nav-separator-length: 24px;
 
 	--editor-bg-color: #fff;
-	--editor-border-color: #fff;
-	--editor-focused-border-color: #fff;
+	--editor-border-color: #d3e3fd;
+	--editor-focused-border-color: #d3e3fd;
 	--editor-radius: 0;
 
-	--text-color: #000;
+	--text-color: #1f1f1f;
 	--selection-color: ;
 
-	--link-color: #002cf2;
+	--link-color: #0b57d0;
 	--link-decoration: underline;
-	--link-hover-color: #002cf2;
+	--link-hover-color: #0b57d0;
 	--link-hover-decoration: underline;
 }
 
@@ -62,12 +66,16 @@ html {
 
 	--nav-bg-color: #3c3c3c;
 	--nav-fg-color: #c7c7c7;
-	--nav-separator-color: #5e5e5e;
 	--nav-radius: 0;
+	--nav-border-color: #3c3c3c;
+	--nav-button-size: 32px;
+	--nav-button-svg-size: 20px;
+	--nav-separator-color: #5e5e5e;
+	--nav-separator-length: 24px;
 
 	--editor-bg-color: #282828;
-	--editor-border-color: #282828;
-	--editor-focused-border-color: #282828;
+	--editor-border-color: #5e5e5e;
+	--editor-focused-border-color: #5e5e5e;
 	--editor-radius: 0;
 
 	--text-color: #e3e3e3;
@@ -85,8 +93,12 @@ html {
 
 	--nav-bg-color: #f0f4f9;
 	--nav-fg-color: #444746;
-	--nav-separator-color: #c4c7c5;
 	--nav-radius: 16px;
+	--nav-border-color: #f0f4f9;
+	--nav-button-size: 28px;
+	--nav-button-svg-size: 20px;
+	--nav-separator-color: #c4c7c5;
+	--nav-separator-length: 20px;
 
 	--editor-bg-color: #fff;
 	--editor-border-color: #c4c7c5;
@@ -108,8 +120,12 @@ html {
 
 	--nav-bg-color: #f6f8fa;
 	--nav-fg-color: #59636e;
-	--nav-separator-color: #dce2e8;
 	--nav-radius: 0.375rem;
+	--nav-border-color: #d1d9e0;
+	--nav-button-size: 32px;
+	--nav-button-svg-size: 16px;
+	--nav-separator-color: #dce2e8;
+	--nav-separator-length: 20px;
 
 	--editor-bg-color: #fff;
 	--editor-border-color: #d1d9e0;
@@ -131,8 +147,12 @@ html {
 
 	--nav-bg-color: #151b23;
 	--nav-fg-color: #9198a1;
-	--nav-separator-color: #313840;
 	--nav-radius: 0.375rem;
+	--nav-border-color: #3d444d;
+	--nav-button-size: 32px;
+	--nav-button-svg-size: 16px;
+	--nav-separator-color: #313840;
+	--nav-separator-length: 20px;
 
 	--editor-bg-color: #0d1117;
 	--editor-border-color: #3d444d;
@@ -154,8 +174,12 @@ html {
 
 	--nav-bg-color: #f7f8f9;
 	--nav-fg-color: #6c707e;
-	--nav-separator-color: #d8d9da;
 	--nav-radius: 8px;
+	--nav-border-color: #f7f8f9;
+	--nav-button-size: 32px;
+	--nav-button-svg-size: 16px;
+	--nav-separator-color: #d8d9da;
+	--nav-separator-length: 20px;
 
 	--editor-bg-color: #fff;
 	--editor-border-color: #e9eaee;
@@ -177,8 +201,12 @@ html {
 
 	--nav-bg-color: #191a1c;
 	--nav-fg-color: #c3c5cb;
-	--nav-separator-color: #373839;
 	--nav-radius: 8px;
+	--nav-border-color: #191a1c;
+	--nav-button-size: 32px;
+	--nav-button-svg-size: 16px;
+	--nav-separator-color: #373839;
+	--nav-separator-length: 20px;
 
 	--editor-bg-color: #191a1c;
 	--editor-border-color: #26282c;
