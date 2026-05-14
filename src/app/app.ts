@@ -94,7 +94,7 @@ export class App implements OnInit, OnDestroy {
 	}
 
 	ngOnInit(): void {
-		App.editor = document.getElementById('editor')! as HTMLDivElement;
+		App.editor = document.getElementById('editor') as HTMLDivElement;
 		App.editor.focus();
 
 		this.themeService.initTheme();

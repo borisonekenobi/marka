@@ -19,7 +19,7 @@ import { tmpParse, tmpSerialize } from '@marka-editor/markdown';
 export class EditorComponent implements OnInit, OnDestroy {
 	protected edited: boolean = false;
 
-	private editor!: HTMLElement;
+	private editor!: HTMLDivElement;
 
 	private unsubscribeFileOpened?: () => void;
 	private unsubscribeFileSave?: () => void;
@@ -31,7 +31,7 @@ export class EditorComponent implements OnInit, OnDestroy {
 	) {}
 
 	ngOnInit(): void {
-		this.editor = document.getElementById('editor')!;
+		this.editor = document.getElementById('editor') as HTMLDivElement;
 		this.unsubscribeFileOpened = window.marka.onFileOpened(
 			(markdown: string): Promise<void> => this.renderFile(markdown),
 		);
