@@ -1,0 +1,53 @@
+.theme-default-light {
+	--app-bg-color: #fff;
+	--app-font-size: 16px;
+
+	--nav-bg-color: #edf2fa;
+	--nav-fg-color: #474747;
+	--nav-radius: 0;
+	--nav-border-color: #edf2fa;
+	--nav-button-size: 32px;
+	--nav-button-svg-size: 20px;
+	--nav-separator-color: dimgray;
+	--nav-separator-length: 24px;
+
+	--editor-bg-color: #fff;
+	--editor-border-color: #d3e3fd;
+	--editor-focused-border-color: #d3e3fd;
+	--editor-radius: 0;
+
+	--text-color: #1f1f1f;
+	--selection-color: ;
+
+	--link-color: #0b57d0;
+	--link-decoration: underline;
+	--link-hover-color: #0b57d0;
+	--link-hover-decoration: underline;
+}
+
+.theme-default-dark {
+	--app-bg-color: #282828;
+	--app-font-size: 16px;
+
+	--nav-bg-color: #3c3c3c;
+	--nav-fg-color: #c7c7c7;
+	--nav-radius: 0;
+	--nav-border-color: #3c3c3c;
+	--nav-button-size: 32px;
+	--nav-button-svg-size: 20px;
+	--nav-separator-color: #5e5e5e;
+	--nav-separator-length: 24px;
+
+	--editor-bg-color: #282828;
+	--editor-border-color: #5e5e5e;
+	--editor-focused-border-color: #5e5e5e;
+	--editor-radius: 0;
+
+	--text-color: #e3e3e3;
+	--selection-color: ;
+
+	--link-color: #a8c7fa;
+	--link-decoration: underline;
+	--link-hover-color: #a8c7fa;
+	--link-hover-decoration: underline;
+}

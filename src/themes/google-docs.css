@@ -1,0 +1,26 @@
+.theme-google-docs-light {
+	--app-bg-color: #f8fafd;
+	--app-font-size: 11px;
+
+	--nav-bg-color: #f0f4f9;
+	--nav-fg-color: #444746;
+	--nav-radius: 16px;
+	--nav-border-color: #f0f4f9;
+	--nav-button-size: 28px;
+	--nav-button-svg-size: 20px;
+	--nav-separator-color: #c4c7c5;
+	--nav-separator-length: 20px;
+
+	--editor-bg-color: #fff;
+	--editor-border-color: #c4c7c5;
+	--editor-focused-border-color: #c4c7c5;
+	--editor-radius: 0;
+
+	--text-color: #000;
+	--selection-color: ;
+
+	--link-color: #15c;
+	--link-decoration: underline;
+	--link-hover-color: #15c;
+	--link-hover-decoration: underline;
+}
