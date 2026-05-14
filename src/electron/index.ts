@@ -23,6 +23,7 @@ import {
 	openProjectFolder,
 	openRecent,
 	rename,
+	requestCloseWindow,
 	save,
 	saveAs,
 	selectFont,
@@ -68,6 +69,10 @@ function createWindow(): void {
 		await setTheme(mainWindow, settings.theme);
 		await setFont(mainWindow, settings.font);
 		mainWindow.show();
+	});
+	mainWindow.on('close', async (event) => {
+		event.preventDefault();
+		if (await requestCloseWindow(mainWindow)) mainWindow.destroy();
 	});
 
 	if (settings.window.maximize) mainWindow.maximize();

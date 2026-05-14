@@ -138,7 +138,7 @@ function getTargetWindow(window: BaseWindow | undefined): BrowserWindow | null {
 	return window instanceof BrowserWindow ? window : BrowserWindow.getFocusedWindow();
 }
 
-function requestCloseWindow(targetWindow: BrowserWindow): Promise<boolean> {
+export function requestCloseWindow(targetWindow: BrowserWindow): Promise<boolean> {
 	return new Promise((resolve) => {
 		const replyChannel = `file-close-reply-${targetWindow.id}-${Date.now()}`;
 
