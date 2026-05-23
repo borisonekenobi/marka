@@ -1,0 +1,61 @@
+.theme-jetbrains-dark {
+	--app-bg-color: #26282c;
+	--app-font-size: 13px;
+
+	--nav-bg-color: #191a1c;
+	--nav-fg-color: #c3c5cb;
+	--nav-radius: 8px;
+	--nav-border-color: #191a1c;
+	--nav-button-size: 32px;
+	--nav-button-svg-size: 16px;
+	--nav-separator-color: #373839;
+	--nav-separator-length: 20px;
+
+	--editor-bg-color: #191a1c;
+	--editor-border-color: #26282c;
+	--editor-focused-border-color: #26282c;
+	--editor-radius: 8px;
+	--editor-padding: .5rem;
+
+	--text-color: #bcbec4;
+	--selection-color: #214283;
+
+	--link-color: #71a1fe;
+	--link-decoration: none;
+	--link-hover-color: #71a1fe;
+	--link-hover-decoration: underline;
+
+	/* JetBrains colors */
+	--bad-character: #f75464ff;
+	--braces-and-operators: #bcbec4ff;
+	--class-name: #bcbec4ff;
+	--class-field: #c77dbbff;
+	--class-method: #57aaf7ff;
+	--comment: #7a7e85ff;
+	--doc-comment-tag: #67a37cff;
+	--doc-comment-text: #5f826bff;
+	--constant: #c77dbbff;
+	--default: #bcbec4ff;
+	--function: #56a8f5ff;
+	--keyword: #cf8e6dff;
+	--metadata: #b3ae60ff;
+	--number: #2aacb8ff;
+	--string-text: #6aab73ff;
+	--string-escape: #cf8e6dff;
+	--regular-expression: #42c3d4ff;
+	--selector: #d5b778ff;
+	--attribute-name: #bababaff;
+	--attribute-value: #6aab73ff;
+	--tag: #d5b778ff;
+	--tag-name: #d5b778ff;
+	--bullet: #cf8e6dff;
+	--code: #6aab73ff;
+	--emphasis: #cf8e6dff;
+	--formula: #cf8e6dff;
+	--header: #c77dbbff;
+	--link: #56a8f5ff;
+	--quote: #6aab73ff;
+	--strong: #cf8e6dff;
+	--deleted-bg: #484a4a;
+	--inserted-bg: #294436;
+}

@@ -1,0 +1,62 @@
+.theme-jetbrains-light {
+	--app-bg-color: #e9eaee;
+	--app-font-size: 13px;
+
+	--nav-bg-color: #f7f8f9;
+	--nav-fg-color: #6c707e;
+	--nav-radius: 8px;
+	--nav-border-color: #f7f8f9;
+	--nav-button-size: 32px;
+	--nav-button-svg-size: 16px;
+	--nav-separator-color: #d8d9da;
+	--nav-separator-length: 20px;
+
+	--editor-bg-color: #fff;
+	--editor-border-color: #e9eaee;
+	--editor-focused-border-color: #e9eaee;
+	--editor-radius: 8px;
+	--editor-padding: .5rem;
+
+	--text-color: #080808;
+	--selection-color: #95bde5;
+
+	--link-color: #2f5eb9;
+	--link-decoration: none;
+	--link-hover-color: #2f5eb9;
+	--link-hover-decoration: underline;
+
+	/* JetBrains colors */
+	--bad-character-bg: #fcc;
+	--braces-and-operators: ;
+	--class-name: #000000ff;
+	--class-field: #871094ff;
+	--class-method: #00627aff;
+	--comment: #8c8c8cff;
+	--doc-comment-tag: #8c8c8cff;
+	--doc-comment-underline: 1px solid #999999ff;
+	--doc-comment-text: #8c8c8cff;
+	--constant: #871094ff;
+	--default: #000000ff;
+	--function: #00627aff;
+	--keyword: #0033b3ff;
+	--metadata: #9e880dff;
+	--number: #1750ebff;
+	--string-text: #067d17ff;
+	--string-escape: #0037a6ff;
+	--regular-expression: #264effff;
+	--selector: #0033b3ff;
+	--attribute-name: #174ad4ff;
+	--attribute-value: #067d17ff;
+	--tag: ;
+	--tag-name: #0033b3ff;
+	--bullet: #0033b3ff;
+	--code: #067d17ff;
+	--emphasis: #0033b3ff;
+	--formula: #0033b3ff;
+	--header: #871094ff;
+	--link: #006dccff;
+	--quote: #067d17ff;
+	--strong: #0033b3ff;
+	--deleted-bg: #d6d6d6;
+	--inserted-bg: #bee6be;
+}

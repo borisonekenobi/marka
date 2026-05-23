@@ -4,6 +4,13 @@ import { Injectable } from '@angular/core';
 	providedIn: 'root',
 })
 export class ThemeService {
+	private readonly styles: string[] = [
+		'style-default',
+		'style-github',
+		'style-google-docs',
+		// 'style-ms-word',
+		'style-jetbrains',
+	];
 	private readonly themes: string[] = [
 		'theme-default-light',
 		'theme-default-dark',
@@ -33,10 +40,29 @@ export class ThemeService {
 		body.classList.add(theme);
 
 		localStorage.setItem('theme', theme);
+		this.setStyle(theme);
 	}
 
 	public initTheme(): void {
-		this.setTheme(this.getTheme());
+		const theme = this.getTheme();
+
+		this.setTheme(theme);
+		this.setStyle(theme);
+	}
+
+	private setStyle(theme: string): void {
+		if (!this.themes.includes(theme)) {
+			return;
+		}
+
+		const body = document.body;
+
+		this.styles.forEach((s) => body.classList.remove(s));
+
+		const style = this.styles.find((s) => theme.includes(s.split('-')[1]));
+		if (style) {
+			body.classList.add(style);
+		}
 	}
 
 	public setFont(font: string): void {

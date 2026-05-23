@@ -1,0 +1,199 @@
+@import 'dark.css';
+@import 'light.css';
+
+.style-default {
+	pre {
+		padding: 20px;
+		border: 1px solid var(--editor-border-color);
+	}
+
+	/* Code Highlighting */
+
+	.keyword {
+		color: var(--keyword-color);
+	}
+
+	.built_in {
+		color: var(--built-in-color);
+	}
+
+	.type {
+		color: var(--keyword-color);
+	}
+
+	.literal {
+		color: var(--literal-color);
+	}
+
+	.number {
+		color: var(--number-color);
+	}
+
+	.operator {
+		color: var(--operator-color);
+	}
+
+	.punctuation {
+		color: var(--punctuation-color);
+	}
+
+	.property {
+		color: var(--property-color);
+	}
+
+	.regexp {
+		color: var(--string-color);
+	}
+
+	.string {
+		color: var(--string-color);
+	}
+
+	.char.escape_ {
+		color: var(--string-color);
+	}
+
+	.subst {
+		color: var(--text-color);
+	}
+
+	.symbol {
+		color: var(--keyword-color);
+	}
+
+	.class {
+		color: var(--class-color);
+	}
+
+	.function {
+		color: var(--function-color);
+	}
+
+	.variable {
+		color: var(--text-color);
+	}
+
+	.variable.language_ {
+		color: var(--keyword-color);
+	}
+
+	.variable.constant_ {
+		color: var(--constant-color);
+	}
+
+	.title {
+		color: var(--class-color);
+	}
+
+	.title.class_ {
+		color: var(--class-color);
+	}
+
+	.title.class_.inherited__ {
+		color: var(--class-color);
+	}
+
+	.title.function_ {
+		color: var(--title-function-color);
+	}
+
+	.title.function_.invoke__ {
+		color: var(--function-color);
+	}
+
+	.params {
+		color: var(--parameter-color);
+	}
+
+	.comment {
+		color: var(--comment-color);
+	}
+
+	.doctag {
+		color: var(--comment-color);
+	}
+
+	.meta {
+	}
+
+	.meta.prompt_ {
+	}
+
+	.meta keyword {
+	}
+
+	.meta string {
+	}
+
+	.section {
+	}
+
+	.tag {
+		color: var(--tag-color);
+	}
+
+	.name {
+		color: var(--tag-name-color);
+	}
+
+	.attr {
+		color: var(--tag-attr-color);
+	}
+
+	.attribute {
+		color: var(--attribute-color);
+	}
+
+	.bullet {
+	}
+
+	.code {
+	}
+
+	.emphasis {
+	}
+
+	.strong {
+	}
+
+	.formula {
+	}
+
+	.link {
+	}
+
+	.quote {
+	}
+
+	.selector-tag {
+		color: var(--selector-tag-color);
+	}
+
+	.selector-id {
+		color: var(--selector-id-color);
+	}
+
+	.selector-class {
+		color: var(--selector-class-color);
+	}
+
+	.selector-attr {
+		color: var(--selector-attr-color);
+	}
+
+	.selector-pseudo {
+		color: var(--selector-pseudo-color);
+	}
+
+	.template-tag {
+	}
+
+	.template-variable {
+	}
+
+	.addition {
+	}
+
+	.deletion {
+	}
+}
