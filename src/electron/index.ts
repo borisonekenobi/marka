@@ -2,6 +2,7 @@ import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 import fs from 'node:fs';
 import * as iconv from 'iconv-lite';
+import type { VFile } from 'vfile';
 
 import {
 	app,
@@ -221,18 +222,21 @@ ipcMain.handle('confirm', confirmUnsavedChanges);
 ipcMain.handle('choose-link', chooseLink);
 ipcMain.handle('choose-img', chooseImg);
 
-async function saveFile(event: IpcMainInvokeEvent, markdown: string): Promise<boolean> {
+async function saveFile(event: IpcMainInvokeEvent, markdown: VFile): Promise<boolean> {
 	const targetWindow = BrowserWindow.fromWebContents(event.sender);
 	if (!targetWindow) return false;
 
 	let currentFile = getCurrentFile(targetWindow.id);
 	if (!currentFile) return await saveAsFile(event, markdown);
 
-	fs.writeFileSync(currentFile.filePath, iconv.encode(markdown, currentFile.encoding));
+	fs.writeFileSync(
+		currentFile.filePath,
+		iconv.encode(markdown.value as string, currentFile.encoding),
+	);
 	return true;
 }
 
-async function saveAsFile(event: IpcMainInvokeEvent, markdown: string): Promise<boolean> {
+async function saveAsFile(event: IpcMainInvokeEvent, markdown: VFile): Promise<boolean> {
 	const targetWindow = BrowserWindow.fromWebContents(event.sender);
 	if (!targetWindow) return false;
 
@@ -245,14 +249,11 @@ async function saveAsFile(event: IpcMainInvokeEvent, markdown: string): Promise<
 	});
 	if (!result) return false;
 
-	fs.writeFileSync(result, iconv.encode(markdown, 'utf8'));
+	fs.writeFileSync(result, iconv.encode(markdown.value as string, 'utf8'));
 	return true;
 }
 
-async function confirmUnsavedChanges(
-	event: IpcMainInvokeEvent,
-	markdown: string,
-): Promise<boolean> {
+async function confirmUnsavedChanges(event: IpcMainInvokeEvent, markdown: VFile): Promise<boolean> {
 	const targetWindow = BrowserWindow.fromWebContents(event.sender);
 	if (!targetWindow) return false;
 

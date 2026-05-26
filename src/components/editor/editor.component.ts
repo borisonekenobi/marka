@@ -6,7 +6,8 @@ import {
 	OnDestroy,
 	OnInit,
 } from '@angular/core';
-import { tmpParse, tmpSerialize } from '@marka-editor/markdown';
+import { serialize } from '@marka-editor/markdown';
+import type { VFile } from 'vfile';
 
 @Component({
 	selector: 'marka-editor',
@@ -33,7 +34,7 @@ export class EditorComponent implements OnInit, OnDestroy {
 	ngOnInit(): void {
 		this.editor = document.getElementById('editor') as HTMLDivElement;
 		this.unsubscribeFileOpened = window.marka.onFileOpened(
-			(markdown: string): Promise<void> => this.renderFile(markdown),
+			(markdown: VFile): Promise<void> => this.renderFile(markdown),
 		);
 		this.unsubscribeFileSave = window.marka.onFileSave(
 			(action: 'save' | 'save-as'): Promise<void> => this.saveFile(action),
@@ -43,16 +44,16 @@ export class EditorComponent implements OnInit, OnDestroy {
 		);
 	}
 
-	async renderFile(markdown: string): Promise<void> {
+	async renderFile(markdown: VFile): Promise<void> {
 		await this.zone.run(async (): Promise<void> => {
-			this.editor.innerHTML = await tmpParse(markdown);
+			this.editor.innerHTML = markdown.value as string;
 			this.edited = false;
 			this.cdr.markForCheck();
 		});
 	}
 
 	async saveFile(action: 'save' | 'save-as'): Promise<void> {
-		const markdown: string = await tmpSerialize(this.editor.innerHTML);
+		const markdown: VFile = await serialize(this.editor.innerHTML);
 
 		let saved: boolean =
 			action === 'save'
@@ -64,7 +65,7 @@ export class EditorComponent implements OnInit, OnDestroy {
 
 	async closeFile(): Promise<boolean> {
 		if (this.edited) {
-			const markdown: string = await tmpSerialize(this.editor.innerHTML);
+			const markdown: VFile = await serialize(this.editor.innerHTML);
 			const confirmed: boolean = await window.marka.confirmClose(markdown);
 			if (!confirmed) return false;
 		}
