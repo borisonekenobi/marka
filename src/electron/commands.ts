@@ -2,6 +2,7 @@ import { type BaseWindow, BrowserWindow, dialog, ipcMain } from 'electron';
 import fs from 'node:fs';
 import chardet from 'chardet';
 import * as iconv from 'iconv-lite';
+import { parse } from '@marka-editor/markdown';
 
 import { settings } from './models/settings.js';
 import { clearCurrentFile, setCurrentFile } from './models/current-file.js';
@@ -26,19 +27,20 @@ export async function newFile(
 	if (!result) return;
 
 	fs.writeFileSync(result, iconv.encode('', 'utf8'));
-	fileOpen(targetWindow, result);
+	await fileOpen(targetWindow, result);
 }
 
 export function newProject(): void {
 	console.log('new project');
 }
 
-function fileOpen(targetWindow: BrowserWindow, filePath: string): void {
+async function fileOpen(targetWindow: BrowserWindow, filePath: string): Promise<void> {
 	const document = fs.readFileSync(filePath);
 	const encoding = chardet.detect(document) || 'utf8';
 	setCurrentFile(targetWindow.id, { filePath, encoding });
 
-	targetWindow.webContents.send('file-opened', iconv.decode(document, encoding));
+	const vfile = await parse(iconv.decode(document, encoding));
+	targetWindow.webContents.send('file-opened', vfile);
 }
 
 export async function open(
@@ -61,7 +63,7 @@ export async function open(
 	if (!result) return;
 
 	const filePath = result[0]!;
-	fileOpen(targetWindow, filePath);
+	await fileOpen(targetWindow, filePath);
 }
 
 export function openProjectFolder(): void {

@@ -1,14 +1,14 @@
 import { contextBridge, ipcRenderer } from 'electron';
+import type { VFile } from 'vfile';
 
 contextBridge.exposeInMainWorld('marka', {
 	onFileOpened,
 	onFileSave,
 	onFileClose,
 
-	confirmClose: (markdown: string): Promise<boolean> => ipcRenderer.invoke('confirm', markdown),
-	saveFile: (markdown: string): Promise<boolean> => ipcRenderer.invoke('save-file', markdown),
-	saveAsFile: (markdown: string): Promise<boolean> =>
-		ipcRenderer.invoke('save-as-file', markdown),
+	confirmClose: (markdown: VFile): Promise<boolean> => ipcRenderer.invoke('confirm', markdown),
+	saveFile: (markdown: VFile): Promise<boolean> => ipcRenderer.invoke('save-file', markdown),
+	saveAsFile: (markdown: VFile): Promise<boolean> => ipcRenderer.invoke('save-as-file', markdown),
 
 	onThemeChanged,
 	onFontChanged,
@@ -17,8 +17,8 @@ contextBridge.exposeInMainWorld('marka', {
 	chooseImg: (): Promise<string | undefined> => ipcRenderer.invoke('choose-img'),
 });
 
-function onFileOpened(callback: (markdown: string) => Promise<void>): () => void {
-	const handler = (_: Electron.IpcRendererEvent, markdown: string): Promise<void> =>
+function onFileOpened(callback: (markdown: VFile) => Promise<void>): () => void {
+	const handler = (_: Electron.IpcRendererEvent, markdown: VFile): Promise<void> =>
 		callback(markdown);
 
 	ipcRenderer.on('file-opened', handler);
