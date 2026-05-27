@@ -18,7 +18,7 @@
           "builder": "@angular/build:application",
           "options": {
             "outputPath": {
-              "base": "dist/marka",
+              "base": "dist",
               "browser": ""
             },
             "sourceMap": false,
