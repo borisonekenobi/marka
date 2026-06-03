@@ -1,7 +1,7 @@
 <button
-	(click)="component.onclick()"
-	[attr.aria-label]="component.name"
-	[attr.title]="component.name"
+	(click)="component().onclick()"
+	[attr.aria-label]="component().name"
+	[attr.title]="component().name"
 >
-	<svg-icon [src]="component.svg" />
+	<svg-icon [src]="component().svg" />
 </button>

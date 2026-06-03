@@ -26,12 +26,12 @@ export class EditorComponent implements OnInit, OnDestroy {
 	private unsubscribeFileSave?: () => void;
 	private unsubscribeFileClose?: () => void;
 
-	constructor(
+	public constructor(
 		private readonly zone: NgZone,
 		private readonly cdr: ChangeDetectorRef,
 	) {}
 
-	ngOnInit(): void {
+	public ngOnInit(): void {
 		this.editor = document.getElementById('editor') as HTMLDivElement;
 		this.unsubscribeFileOpened = window.marka.onFileOpened(
 			(markdown: VFile): Promise<void> => this.renderFile(markdown),
@@ -44,7 +44,13 @@ export class EditorComponent implements OnInit, OnDestroy {
 		);
 	}
 
-	async renderFile(markdown: VFile): Promise<void> {
+	public ngOnDestroy(): void {
+		this.unsubscribeFileOpened?.();
+		this.unsubscribeFileSave?.();
+		this.unsubscribeFileClose?.();
+	}
+
+	private async renderFile(markdown: VFile): Promise<void> {
 		await this.zone.run(async (): Promise<void> => {
 			this.editor.innerHTML = markdown.value as string;
 			this.edited = false;
@@ -52,7 +58,7 @@ export class EditorComponent implements OnInit, OnDestroy {
 		});
 	}
 
-	async saveFile(action: 'save' | 'save-as'): Promise<void> {
+	private async saveFile(action: 'save' | 'save-as'): Promise<void> {
 		const markdown: VFile = await serialize(this.editor.innerHTML);
 
 		let saved: boolean =
@@ -63,7 +69,7 @@ export class EditorComponent implements OnInit, OnDestroy {
 		if (saved) this.edited = false;
 	}
 
-	async closeFile(): Promise<boolean> {
+	private async closeFile(): Promise<boolean> {
 		if (this.edited) {
 			const markdown: VFile = await serialize(this.editor.innerHTML);
 			const confirmed: boolean = await window.marka.confirmClose(markdown);
@@ -74,11 +80,5 @@ export class EditorComponent implements OnInit, OnDestroy {
 		this.edited = false;
 		this.cdr.markForCheck();
 		return true;
-	}
-
-	ngOnDestroy(): void {
-		this.unsubscribeFileOpened?.();
-		this.unsubscribeFileSave?.();
-		this.unsubscribeFileClose?.();
 	}
 }

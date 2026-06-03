@@ -28,7 +28,7 @@ export class App implements OnInit, OnDestroy {
 	private unsubscribeTheme?: () => void;
 	private unsubscribeFont?: () => void;
 
-	constructor(
+	public constructor(
 		private readonly themeService: ThemeService,
 		private readonly cdr: ChangeDetectorRef,
 	) {}
@@ -97,7 +97,7 @@ export class App implements OnInit, OnDestroy {
 		document.execCommand(commandId, false, value);
 	}
 
-	ngOnInit(): void {
+	public ngOnInit(): void {
 		App.editor = document.getElementById('editor') as HTMLDivElement;
 		App.editor.focus();
 
@@ -114,7 +114,7 @@ export class App implements OnInit, OnDestroy {
 		);
 	}
 
-	ngOnDestroy(): void {
+	public ngOnDestroy(): void {
 		this.unsubscribeTheme?.();
 		this.unsubscribeFont?.();
 	}

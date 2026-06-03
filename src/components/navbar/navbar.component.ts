@@ -1,4 +1,4 @@
-import { Component, Input } from '@angular/core';
+import { Component, input, InputSignal } from '@angular/core';
 import {
 	ButtonNavElement,
 	NavElement,
@@ -17,8 +17,7 @@ import { NavSeparatorComponent } from '../nav-separator/nav-separator.component'
 	styleUrl: './navbar.component.css',
 })
 export class NavbarComponent {
-	@Input({ required: true })
-	public components!: NavElement[];
+	public components: InputSignal<NavElement[]> = input<NavElement[]>([]);
 
 	protected readonly SelectNavElement: typeof SelectNavElement = SelectNavElement;
 	protected readonly ButtonNavElement: typeof ButtonNavElement = ButtonNavElement;

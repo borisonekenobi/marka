@@ -1,4 +1,4 @@
-import { Component, Input } from '@angular/core';
+import { Component, input, InputSignal } from '@angular/core';
 import { ButtonNavElement } from '../../models/nav-element';
 import { SvgIconComponent } from 'angular-svg-icon';
 
@@ -10,6 +10,5 @@ import { SvgIconComponent } from 'angular-svg-icon';
 	styleUrl: './nav-button.component.css',
 })
 export class NavButtonComponent {
-	@Input({ required: true })
-	public component!: ButtonNavElement;
+	public component: InputSignal<ButtonNavElement> = input.required<ButtonNavElement>();
 }

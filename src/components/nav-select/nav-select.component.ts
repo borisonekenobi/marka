@@ -2,7 +2,8 @@ import {
 	Component,
 	ElementRef,
 	HostListener,
-	Input,
+	input,
+	InputSignal,
 	OnInit,
 	signal,
 	WritableSignal,
@@ -18,20 +19,17 @@ import { NavElementOption, SelectNavElement } from '../../models/nav-element';
 	styleUrl: './nav-select.component.css',
 })
 export class NavSelectComponent implements OnInit {
-	@Input({ required: true })
-	public component!: SelectNavElement;
-
-	@Input()
-	public title: string = '';
+	public component: InputSignal<SelectNavElement> = input.required<SelectNavElement>();
+	public title: InputSignal<string> = input<string>('');
 
 	protected isOpen!: WritableSignal<boolean>;
 	protected selectedOption!: WritableSignal<NavElementOption>;
 
-	constructor(private elementRef: ElementRef) {}
+	public constructor(private elementRef: ElementRef) {}
 
-	ngOnInit(): void {
+	public ngOnInit(): void {
 		this.isOpen = signal(false);
-		this.selectedOption = signal(this.component.options[0]);
+		this.selectedOption = signal(this.component().options[0]);
 	}
 
 	@HostListener('document:click', ['$event'])
@@ -48,6 +46,6 @@ export class NavSelectComponent implements OnInit {
 	protected selectOption(option: NavElementOption): void {
 		this.selectedOption.set(option);
 		this.isOpen.set(false);
-		this.component.onclick(option);
+		this.component().onclick(option);
 	}
 }

@@ -1,5 +1,5 @@
 <nav>
-	@for (component of components; track component) {
+	@for (component of components(); track component) {
 		@if (component instanceof SelectNavElement) {
 			<nav-select [component]="component" [title]="component.name" />
 		} @else if (component instanceof ButtonNavElement) {

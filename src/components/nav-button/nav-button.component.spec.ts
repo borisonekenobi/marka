@@ -1,6 +1,7 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { vi } from 'vitest';
 import { provideAngularSvgIcon } from 'angular-svg-icon';
+import { InputSignal } from '@angular/core';
 
 import { NavButtonComponent } from './nav-button.component';
 import { ButtonNavElement } from '../../models/nav-element';
@@ -24,7 +25,7 @@ describe('NavButtonComponent', () => {
 		fixture = TestBed.createComponent(NavButtonComponent);
 		component = fixture.componentInstance;
 
-		component.component = testButton;
+		component.component = (() => testButton) as unknown as InputSignal<ButtonNavElement>;
 		fixture.detectChanges();
 	});
 

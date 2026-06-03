@@ -1,5 +1,6 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { vi } from 'vitest';
+import { InputSignal } from '@angular/core';
 
 import { NavSelectComponent } from './nav-select.component';
 import { SelectNavElement } from '../../models/nav-element';
@@ -24,8 +25,8 @@ describe('NavSelectComponent', () => {
 		fixture = TestBed.createComponent(NavSelectComponent);
 		component = fixture.componentInstance;
 
-		component.component = testNavSelect;
-		component.title = 'Format';
+		component.component = (() => testNavSelect) as unknown as InputSignal<SelectNavElement>;
+		component.title = (() => 'Format') as unknown as InputSignal<string>;
 
 		fixture.detectChanges();
 	});

@@ -1,7 +1,7 @@
 <div class="dropdown-container">
 	<button
-		(click)="selectOption(selectedOption()!)"
-		[attr.aria-label]="title"
+		(click)="selectOption(selectedOption())"
+		[attr.aria-label]="title()"
 		class="dropdown-trigger"
 	>
 		<span class="selected-text">{{ selectedOption().label || 'Select...' }}</span>
@@ -9,7 +9,7 @@
 
 	<button
 		(click)="toggleDropdown()"
-		[attr.aria-label]="title + ' toggle'"
+		[attr.aria-label]="`${title()} toggle`"
 		class="dropdown-toggle"
 	>
 		<svg
@@ -24,7 +24,7 @@
 	</button>
 
 	<div [class.open]="isOpen()" class="dropdown-menu">
-		@for (option of component.options; track option.value) {
+		@for (option of component().options; track option.value) {
 			<button
 				(click)="selectOption(option)"
 				[class.selected]="selectedOption().value === option.value"
