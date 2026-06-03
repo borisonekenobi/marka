@@ -88,6 +88,10 @@ export class App implements OnInit, OnDestroy {
 		App.selectStyleOption({ value: 'pre', label: 'Code', elementType: 'pre' });
 	}
 
+	public static horizontalRule(): void {
+		App.executeCommand('insertHorizontalRule');
+	}
+
 	private static executeCommand(commandId: DocumentCommand, value?: string): void {
 		App.editor.focus();
 		document.execCommand(commandId, false, value);
