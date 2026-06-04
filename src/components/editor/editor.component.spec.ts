@@ -8,6 +8,8 @@ describe('EditorComponent', () => {
 	let fixture: ComponentFixture<EditorComponent>;
 
 	beforeEach(async () => {
+		vi.useFakeTimers();
+
 		// Create the editor element expected by ngOnInit()
 		const editor = document.createElement('div');
 		editor.id = 'editor';
@@ -42,7 +44,30 @@ describe('EditorComponent', () => {
 		});
 	});
 
+	afterEach(() => {
+		vi.clearAllTimers();
+		vi.useRealTimers();
+	});
+
 	it('should create', () => {
 		expect(component).toBeTruthy();
+	});
+
+	it('should debounce the typing pause action', () => {
+		const pauseSpy = vi.spyOn(
+			component as unknown as { onTypingPaused: () => Promise<void> },
+			'onTypingPaused',
+		);
+
+		component.handleEditorInput();
+		component.handleEditorInput();
+
+		expect(pauseSpy).not.toHaveBeenCalled();
+
+		vi.advanceTimersByTime(749);
+		expect(pauseSpy).not.toHaveBeenCalled();
+
+		vi.advanceTimersByTime(1);
+		expect(pauseSpy).toHaveBeenCalledTimes(1);
 	});
 });
